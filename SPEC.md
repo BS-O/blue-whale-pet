@@ -89,7 +89,7 @@ blue-whale-pet/
 ```json
 {
   "version": 1,
-  "api": {"key": "", "base_url": "https://api.deepseek.com", "model": "deepseek-chat",
+  "api": {"key": "", "base_url": "https://api.deepseek.com", "model": "deepseek-flash",
           "max_tokens": 120, "temperature": 1.3, "timeout": 30},
   "pet": {"size": 168, "x": null, "y": null, "always_on_top": true,
           "opacity": 1.0, "click_through": false},
