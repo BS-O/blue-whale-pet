@@ -1,0 +1,24 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+build/
+dist/
+*.spec.bak
+# 构建中间产物
+release/windows/_build/
+release/linux/_build/
+packaging/**/_build/
+# 临时
+*.log
+*.tmp
+/tmp/
+# 系统
+Thumbs.db
+.DS_Store
+desktop.ini
+# 用户本地配置（不应提交）
+BlueWhalePet-Data/
+config.json

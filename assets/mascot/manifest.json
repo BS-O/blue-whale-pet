@@ -1,0 +1,187 @@
+{
+  "version": 1,
+  "canvas": {
+    "w": 512,
+    "h": 512,
+    "anchor_x": 256,
+    "anchor_y": 496
+  },
+  "key_color": "#010203",
+  "default_state": "idle",
+  "states": {
+    "idle": {
+      "frames": [
+        "idle_0",
+        "idle_1",
+        "idle_2",
+        "idle_3"
+      ],
+      "durations": [
+        420,
+        420,
+        420,
+        420
+      ],
+      "loop": true
+    },
+    "blink": {
+      "frames": [
+        "blink_0",
+        "blink_1",
+        "blink_2"
+      ],
+      "durations": [
+        70,
+        70,
+        70
+      ],
+      "loop": false
+    },
+    "happy": {
+      "frames": [
+        "happy_0",
+        "happy_1",
+        "happy_2"
+      ],
+      "durations": [
+        200,
+        200,
+        200
+      ],
+      "loop": false
+    },
+    "laugh": {
+      "frames": [
+        "laugh_0",
+        "laugh_1",
+        "laugh_2"
+      ],
+      "durations": [
+        140,
+        140,
+        140
+      ],
+      "loop": false
+    },
+    "talk": {
+      "frames": [
+        "talk_0",
+        "talk_1",
+        "talk_2"
+      ],
+      "durations": [
+        160,
+        160,
+        160
+      ],
+      "loop": true
+    },
+    "think": {
+      "frames": [
+        "think_0",
+        "think_1",
+        "think_2"
+      ],
+      "durations": [
+        300,
+        300,
+        300
+      ],
+      "loop": false
+    },
+    "sleep": {
+      "frames": [
+        "sleep_0",
+        "sleep_1",
+        "sleep_2"
+      ],
+      "durations": [
+        800,
+        800,
+        800
+      ],
+      "loop": false
+    },
+    "surprise": {
+      "frames": [
+        "surprise_0",
+        "surprise_1"
+      ],
+      "durations": [
+        180,
+        180
+      ],
+      "loop": false
+    },
+    "sad": {
+      "frames": [
+        "sad_0",
+        "sad_1"
+      ],
+      "durations": [
+        500,
+        500
+      ],
+      "loop": false
+    },
+    "angry": {
+      "frames": [
+        "angry_0",
+        "angry_1"
+      ],
+      "durations": [
+        220,
+        220
+      ],
+      "loop": false
+    },
+    "love": {
+      "frames": [
+        "love_0",
+        "love_1"
+      ],
+      "durations": [
+        400,
+        400
+      ],
+      "loop": false
+    },
+    "drag": {
+      "frames": [
+        "drag_0",
+        "drag_1"
+      ],
+      "durations": [
+        150,
+        150
+      ],
+      "loop": false
+    },
+    "wave": {
+      "frames": [
+        "wave_0",
+        "wave_1",
+        "wave_2"
+      ],
+      "durations": [
+        240,
+        240,
+        240
+      ],
+      "loop": true
+    },
+    "eat": {
+      "frames": [
+        "eat_0",
+        "eat_1",
+        "eat_2"
+      ],
+      "durations": [
+        260,
+        260,
+        260
+      ],
+      "loop": true
+    }
+  }
+}
