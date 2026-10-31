@@ -1,0 +1,1 @@
+{"api": {"key": "", "base_url": "https://api.deepseek.com", "model": "deepseek-flash"}, "pet": {"size": 200, "x": 470, "y": 300, "always_on_top": true}, "speech": {"bubble_seconds": 30, "typewriter": true}}

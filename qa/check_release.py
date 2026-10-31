@@ -65,7 +65,7 @@ def main() -> int:
             if len(parts) == 2:
                 declared[parts[1].lstrip("*")] = parts[0]
         for r in rows:
-            rel = r["path"].split("release/", 1)[-1]
+            rel = r["path"].replace("\\", "/").split("release/", 1)[-1]
             if rel not in declared:
                 errors.append(f"SHA256SUMS 缺少 {rel}")
             elif declared[rel] != r["sha256"]:

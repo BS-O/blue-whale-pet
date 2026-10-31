@@ -1,0 +1,315 @@
+#!/usr/bin/env bash
+# =============================================================================
+# Arch Linux 包手工构建脚本（无需 pacman / makepkg）
+# =============================================================================
+# 产出合法的 Arch 包：blue-whale-pet-<ver>-<rel>-any.pkg.tar.zst
+# 包内包含：.PKGINFO、.INSTALL、.MTREE（有 bsdtar 时）、以及与 .deb 完全一致的文件树。
+# 同时生成 PKGBUILD 引用的源码 tarball 与填好 sha256 的 PKGBUILD。
+#
+# 用法：
+#   bash packaging/linux/arch/build_arch_pkg.sh
+#   bash packaging/linux/arch/build_arch_pkg.sh --out /tmp/out --keep-work
+# 选项：--project-root DIR --debian-dir DIR --out DIR --work DIR
+#       --version VER --pkgrel N --maintainer STR --keep-work -h
+#
+# 静态校验：zstd -t、tar -tf 文件树、.PKGINFO 字段、文件权限（644/755）。
+# =============================================================================
+set -euo pipefail
+
+SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)
+LINUX_DIR=$(cd -- "$SCRIPT_DIR/.." && pwd)
+# shellcheck source=../common.sh
+. "$LINUX_DIR/common.sh"
+
+usage() {
+  cat <<'EOF'
+Arch Linux 包手工构建脚本（tar + zstd，无需 pacman）
+
+用法: bash packaging/linux/arch/build_arch_pkg.sh [选项]
+  --project-root DIR   项目根目录（默认自动向上查找）
+  --debian-dir DIR     debian 辅助文件目录（默认 packaging/linux/debian）
+  --out DIR            产物输出目录（默认 <项目>/release/linux）
+  --work DIR           构建临时目录（默认 mktemp /tmp）
+  --version VER        软件版本（默认 1.0.0）
+  --pkgrel N           Arch pkgrel（默认 1）
+  --maintainer STR     packager 字段
+  --keep-work          保留临时目录
+  -h, --help           显示帮助
+EOF
+}
+
+PROJECT_ROOT=""
+DEBIAN_DIR="$LINUX_DIR/debian"
+OUT_DIR=""
+WORK=""
+VERSION="$APP_VERSION"
+REL="$PKG_REL"
+KEEP_WORK=0
+
+while [ $# -gt 0 ]; do
+  case "$1" in
+    --project-root) PROJECT_ROOT="${2:?}"; shift ;;
+    --debian-dir)   DEBIAN_DIR="${2:?}"; shift ;;
+    --out)          OUT_DIR="${2:?}"; shift ;;
+    --work)         WORK="${2:?}"; shift ;;
+    --version)      VERSION="${2:?}"; shift ;;
+    --pkgrel)       REL="${2:?}"; shift ;;
+    --maintainer)   MAINTAINER="${2:?}"; shift ;;
+    --keep-work)    KEEP_WORK=1 ;;
+    -h|--help)      usage; exit 0 ;;
+    *)              die "未知参数: $1（-h 查看帮助）" ;;
+  esac
+  shift
+done
+
+APP_VERSION="$VERSION"
+PKG_REL="$REL"
+
+[ -n "$PROJECT_ROOT" ] || PROJECT_ROOT="$(project_root_from "$LINUX_DIR/../..")"
+PROJECT_ROOT=$(cd -- "$PROJECT_ROOT" && pwd)
+[ -n "$OUT_DIR" ] || OUT_DIR="$PROJECT_ROOT/release/linux"
+mkdir -p "$OUT_DIR"
+OUT_DIR=$(cd -- "$OUT_DIR" && pwd)
+if [ -z "$WORK" ]; then
+  WORK=$(mktemp -d "${TMPDIR:-/tmp}/${PKG_NAME}-arch.XXXXXX")
+else
+  mkdir -p "$WORK"
+fi
+
+cleanup() {
+  local rc=$?
+  trap - EXIT INT TERM
+  if [ "$KEEP_WORK" = 1 ]; then
+    log "已保留临时构建目录: $WORK"
+  else
+    rm -rf "$WORK"
+  fi
+  exit "$rc"
+}
+trap cleanup EXIT INT TERM
+
+require_cmd() { command -v "$1" >/dev/null 2>&1 || die "缺少命令 $1（$2）"; }
+require_cmd tar "apt-get install -y tar"
+require_cmd zstd "apt-get install -y zstd"
+require_cmd python3 "apt-get install -y python3"
+
+log "Arch 包构建：$PKG_NAME $VERSION-$REL arch=any"
+log "源码根目录: $PROJECT_ROOT"
+
+PKG_FILE="$OUT_DIR/${PKG_NAME}-${VERSION}-${REL}-any.pkg.tar.zst"
+TARBALL="$OUT_DIR/${PKG_NAME}-${VERSION}.tar.gz"
+
+# ---------------------------------------------------------------------------
+# 1) 源码 tarball（PKGBUILD 的 source；便于离线 makepkg）
+# ---------------------------------------------------------------------------
+build_tarball() {
+  log "生成 PKGBUILD 源码 tarball: $(basename "$TARBALL")"
+  local tmp="$WORK/${PKG_NAME}-${VERSION}.tar.gz"
+  local epoch
+  epoch=$(date +%s)
+  tar -C "$PROJECT_ROOT" \
+      --exclude='.git' --exclude='__pycache__' --exclude='*.py[co]' \
+      --exclude='assets/source' --exclude='assets/preview' \
+      --sort=name --mtime="@$epoch" --owner=0 --group=0 --numeric-owner \
+      --transform "s|^|${PKG_NAME}-${VERSION}/|" \
+      -czf "$tmp" \
+      src assets LICENSE README.md \
+      packaging/linux/common.sh packaging/linux/debian
+  install -m 0644 "$tmp" "$TARBALL"
+  ok "tarball: $TARBALL ($(du -h "$TARBALL" | cut -f1))"
+}
+
+# ---------------------------------------------------------------------------
+# 2) 铺设包文件树（与 .deb 完全一致布局，复用 common.sh 的 stage_tree）
+# ---------------------------------------------------------------------------
+stage_pkg() {
+  local pkgroot="$WORK/pkgroot"
+  rm -rf "$pkgroot"
+  # stage_tree 的日志走 stdout，这里重定向到 stderr，保证命令替换只捕获路径
+  stage_tree "$PROJECT_ROOT" "$DEBIAN_DIR" "$pkgroot" >&2
+  printf '%s\n' "$pkgroot"
+}
+
+# ---------------------------------------------------------------------------
+# 3) 生成 .PKGINFO / .INSTALL / .MTREE
+# ---------------------------------------------------------------------------
+write_metadata() {
+  local pkgroot="$1"
+  local builddate size
+  builddate=$(date +%s)
+  size=$(du -sb --apparent-size "$pkgroot" 2>/dev/null | cut -f1 || true)
+  [ -n "$size" ] || size=$(du -sb "$pkgroot" | cut -f1)
+
+  log "写入 .PKGINFO（size=$size bytes, builddate=$builddate）"
+  cat > "$pkgroot/.PKGINFO" <<EOF
+# Generated by blue-whale-pet build_arch_pkg.sh
+pkgname = $PKG_NAME
+pkgbase = $PKG_NAME
+pkgver = $VERSION-$REL
+pkgdesc = $APP_NAME_ZH - DeepSeek 主题桌面宠物（蓝色大肥鱼）
+url = https://github.com/blue-whale-pet/blue-whale-pet
+builddate = $builddate
+packager = $MAINTAINER
+size = $size
+arch = any
+license = MIT
+depend = python
+depend = tk
+depend = python-pillow
+optdepend = python-pystray: 可选系统托盘支持（无则使用宠物右键菜单）
+EOF
+  if ! grep -qx 'pkgname = blue-whale-pet' "$pkgroot/.PKGINFO"; then
+    die ".PKGINFO 生成异常"
+  fi
+
+  install -m 0644 "$SCRIPT_DIR/blue-whale-pet.install" "$pkgroot/.INSTALL"
+  log "写入 .INSTALL"
+
+  # .MTREE（可选；Arch 官方包带，用 bsdtar 生成 gzip 压缩的 mtree 清单）
+  if command -v bsdtar >/dev/null 2>&1; then
+    log "生成 .MTREE（bsdtar）"
+    (
+      cd "$pkgroot"
+      # 与 pacman 包一致：uid/gid 归零（否则记录的是构建用户 1000）
+      bsdtar -czf .MTREE --format=mtree \
+        --options='!all,use-set,type,uid,gid,mode,time,size,md5,sha256,link' \
+        --uid 0 --gid 0 --uname root --gname root \
+        --exclude .MTREE .
+    )
+    gzip -t "$pkgroot/.MTREE" || die ".MTREE gzip 校验失败"
+    gzip -dc "$pkgroot/.MTREE" | head -2 | grep -q 'uid=0 gid=0' \
+      || warn ".MTREE uid/gid 未归零（不影响安装，但不够规范）"
+  else
+    warn "未找到 bsdtar（libarchive-tools），跳过可选文件 .MTREE；pacman 仍可安装本包"
+    warn "如需完整包，可先 apt-get install -y libarchive-tools 再构建"
+  fi
+}
+
+# ---------------------------------------------------------------------------
+# 4) 打包：.PKGINFO 必须为第一个条目，之后 .INSTALL/.MTREE/文件树，zstd -19 压缩
+# ---------------------------------------------------------------------------
+pack_zst() {
+  local pkgroot="$1"
+  local tmp="$WORK/pkg.tar.zst"
+  local epoch
+  epoch=$(date +%s)
+  log "打包（tar --sort=name + zstd -19）..."
+  local members=(.PKGINFO .INSTALL)
+  [ -f "$pkgroot/.MTREE" ] && members+=(".MTREE")
+  members+=(usr)
+  (
+    cd "$pkgroot"
+    tar --sort=name --mtime="@$epoch" --owner=0 --group=0 --numeric-owner \
+        -cf - "${members[@]}" \
+      | zstd -19 -T0 -q -c > "$tmp"
+  )
+  install -m 0644 "$tmp" "$PKG_FILE"
+  ok "生成: $PKG_FILE ($(du -h "$PKG_FILE" | cut -f1))"
+}
+
+# ---------------------------------------------------------------------------
+# 5) PKGBUILD（填入 tarball 真实 sha256；输出到产物目录）
+# ---------------------------------------------------------------------------
+write_pkgbuild() {
+  local tarball_sha pkgbuild_out="$OUT_DIR/PKGBUILD"
+  tarball_sha=$(sha256_of "$TARBALL" | awk '{print $1}')
+  log "写入 PKGBUILD 到 $pkgbuild_out（sha256sums=$tarball_sha）"
+  sed -e "s|@PKGVER@|$VERSION|g" \
+      -e "s|@PKGREL@|$REL|g" \
+      -e "s|@MAINTAINER@|$MAINTAINER|g" \
+      -e "s|@SHA256SUM@|$tarball_sha|g" \
+      "$SCRIPT_DIR/PKGBUILD" > "$pkgbuild_out"
+  install -m 0644 "$SCRIPT_DIR/blue-whale-pet.install" \
+    "$OUT_DIR/blue-whale-pet.install"
+  bash -n "$pkgbuild_out" || die "生成的 PKGBUILD 语法错误"
+  ok "PKGBUILD 语法检查通过（bash -n）"
+}
+
+# ---------------------------------------------------------------------------
+# 6) 静态校验
+# ---------------------------------------------------------------------------
+validate_pkg() {
+  log "静态校验 Arch 包..."
+  zstd -t "$PKG_FILE" >/dev/null 2>&1 || die "zstd -t 校验失败"
+  ok "zstd -t 解压校验通过"
+
+  local listing
+  listing=$(tar -tf "$PKG_FILE")
+  # .PKGINFO 必须是第一个条目（pacman 要求）
+  [ "$(head -n1 <<<"$listing")" = ".PKGINFO" ] || die ".PKGINFO 不是包内第一个条目"
+  ok ".PKGINFO 为第一个条目"
+
+  local f
+  local expected=(
+    ".INSTALL"
+    "usr/bin/$PKG_NAME"
+    "usr/lib/$PKG_NAME/main.py"
+    "usr/lib/$PKG_NAME/src/main.py"
+    "usr/lib/$PKG_NAME/assets/mascot/manifest.json"
+    "usr/share/applications/$PKG_NAME.desktop"
+    "usr/share/icons/hicolor/scalable/apps/$PKG_NAME.svg"
+  )
+  for f in "${expected[@]}"; do
+    grep -Fxq -- "$f" <<<"$listing" || die "包内缺少: $f"
+  done
+  local n
+  for n in 16 24 32 48 64 128 256 512; do
+    grep -Fxq -- "usr/share/icons/hicolor/${n}x${n}/apps/$PKG_NAME.png" <<<"$listing" \
+      || die "包内缺少 ${n}x${n} 图标"
+  done
+  ok "文件树与 .deb 布局一致（图标 16~512 + scalable svg）"
+
+  # .PKGINFO 字段
+  local pkginfo
+  pkginfo=$(tar -xOf "$PKG_FILE" .PKGINFO)
+  grep -qx "pkgname = $PKG_NAME" <<<"$pkginfo" || die ".PKGINFO pkgname 错误"
+  grep -qx "pkgver = $VERSION-$REL" <<<"$pkginfo" || die ".PKGINFO pkgver 错误"
+  grep -qx 'arch = any' <<<"$pkginfo" || die ".PKGINFO arch 错误"
+  for dep in python tk python-pillow; do
+    grep -qx "depend = $dep" <<<"$pkginfo" || die ".PKGINFO 缺少依赖 $dep"
+  done
+  ok ".PKGINFO 字段校验通过（$PKG_NAME $VERSION-$REL any；depend: python/tk/python-pillow）"
+
+  # 文件权限：启动器 755，普通文件 644，目录 755
+  local modes
+  modes=$(tar -tvf "$PKG_FILE")
+  local launcher_mode
+  launcher_mode=$(awk '$NF == "usr/bin/'"$PKG_NAME"'" {print $1}' <<<"$modes")
+  [ "$launcher_mode" = "-rwxr-xr-x" ] || die "启动器权限错误: $launcher_mode"
+  local bad
+  bad=$(awk '$NF ~ /^usr\/lib\/blue-whale-pet\// && $1 ~ /^-/ && $1 != "-rw-r--r--" {print $1, $NF}' <<<"$modes")
+  [ -z "$bad" ] || die "存在权限异常文件: $bad"
+  local baddir
+  baddir=$(awk '$1 ~ /^d/ && $1 != "drwxr-xr-x" {print $1, $NF}' <<<"$modes")
+  [ -z "$baddir" ] || warn "存在非 755 目录: $baddir"
+  ok "文件权限校验通过（启动器 755 / 数据文件 644 / 目录 755）"
+
+  # PKGBUILD 可解析检查
+  command -v bash >/dev/null 2>&1 && bash -n "$SCRIPT_DIR/PKGBUILD" \
+    && ok "模板 PKGBUILD 语法检查通过"
+
+  # .MTREE 规范性（若存在）
+  if tar -tf "$PKG_FILE" | grep -qx '.MTREE'; then
+    tar -xOf "$PKG_FILE" .MTREE | gzip -dc | head -3 > "$WORK/mtree.head"
+    grep -q 'uid=0 gid=0' "$WORK/mtree.head" \
+      && ok ".MTREE 校验通过（gzip 有效、uid/gid=0）" \
+      || warn ".MTREE uid/gid 非 0"
+  else
+    warn "包内无 .MTREE（可选文件缺失，pacman 仍可安装）"
+  fi
+
+  sha256_of "$PKG_FILE"
+  sha256_of "$TARBALL"
+  sha256_of "$OUT_DIR/PKGBUILD"
+}
+
+# ---------------------------------------------------------------------------
+# 执行
+# ---------------------------------------------------------------------------
+build_tarball
+PKG_ROOT=$(stage_pkg)
+write_metadata "$PKG_ROOT"
+pack_zst "$PKG_ROOT"
+write_pkgbuild
+validate_pkg
+ok "Arch 包构建完成：$(basename "$PKG_FILE")"

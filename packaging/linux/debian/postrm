@@ -1,0 +1,40 @@
+#!/bin/sh
+# 蓝鲸桌宠 .deb 卸载后脚本：
+#  - 清理各用户的开机自启项 ~/.config/autostart/blue-whale-pet.desktop
+#  - 保留用户配置目录 ~/.config/blue-whale-pet（如彻底删除请用户手动清理）
+#  - 刷新桌面数据库 / 图标缓存
+set -e
+
+case "$1" in
+  remove|purge)
+    # 清理所有普通用户的自启项（保留配置文件本身）
+    if command -v getent >/dev/null 2>&1; then
+      getent passwd 2>/dev/null \
+        | awk -F: '$3 >= 1000 && $3 < 65534 && $6 != "" { print $6 }' \
+        | while IFS= read -r home; do
+            rm -f "$home/.config/autostart/blue-whale-pet.desktop" 2>/dev/null || true
+          done || true
+    fi
+    # 清理运行时生成的 __pycache__（dpkg 只删清单内文件，.pyc 是运行时产物）
+    if [ -d /usr/lib/blue-whale-pet ]; then
+      find /usr/lib/blue-whale-pet -type d -name __pycache__ -prune -exec rm -rf {} + 2>/dev/null || true
+      find /usr/lib/blue-whale-pet -depth -type d -empty -delete 2>/dev/null || true
+    fi
+    if command -v update-desktop-database >/dev/null 2>&1; then
+      update-desktop-database -q /usr/share/applications >/dev/null 2>&1 || true
+    fi
+    if command -v gtk-update-icon-cache >/dev/null 2>&1; then
+      gtk-update-icon-cache -q -t -f /usr/share/icons/hicolor >/dev/null 2>&1 || true
+    fi
+    echo "已移除 蓝鲸桌宠。"
+    echo "用户配置已保留在 ~/.config/blue-whale-pet/（如不再需要可手动删除）。"
+    ;;
+  purge)
+    ;;
+  upgrade|failed-upgrade|abort-install|abort-upgrade|disappear)
+    ;;
+  *)
+    ;;
+esac
+
+exit 0

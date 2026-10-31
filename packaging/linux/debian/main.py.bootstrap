@@ -1,0 +1,57 @@
+#!/usr/bin/env python3
+"""蓝鲸桌宠 Linux 安装版引导入口（安装为 /usr/lib/blue-whale-pet/main.py）。
+
+安装布局（.deb / Arch 包一致）：
+    /usr/lib/blue-whale-pet/main.py      <- 本文件（引导壳）
+    /usr/lib/blue-whale-pet/src/         <- 应用源码（含 src/main.py 与各模块）
+    /usr/lib/blue-whale-pet/assets/      <- 美术资产
+
+启动器 /usr/bin/blue-whale-pet 执行：
+    exec python3 /usr/lib/blue-whale-pet/main.py "$@"
+
+本壳职责：
+1. 把 src/ 加入 sys.path（等价于开发态 `python3 src/main.py` 的 sys.path[0]），
+   使 src/main.py 中 `import resources` 这类同级绝对导入可用；
+2. 设置 BLUE_WHALE_PET_ASSETS / BLUE_WHALE_PET_INSTALL_ROOT 环境变量兜底；
+3. 以 __main__ 身份运行 src/main.py，透传全部 CLI 参数（--version/--selftest/...）与退出码。
+"""
+from __future__ import annotations
+
+import os
+import runpy
+import sys
+
+_INSTALL_ROOT = os.path.dirname(os.path.abspath(__file__))
+_SRC_DIR = os.path.join(_INSTALL_ROOT, "src")
+_ENTRY = os.path.join(_SRC_DIR, "main.py")
+
+
+def main() -> int:
+    if not os.path.isfile(_ENTRY):
+        sys.stderr.write(
+            "[blue-whale-pet] 安装不完整：找不到 %s，请重新安装软件包。\n" % _ENTRY
+        )
+        return 1
+
+    if _SRC_DIR not in sys.path:
+        sys.path.insert(0, _SRC_DIR)
+
+    # 资源解析兜底（应用若读取这些环境变量即可直接定位）
+    os.environ.setdefault("BLUE_WHALE_PET_INSTALL_ROOT", _INSTALL_ROOT)
+    os.environ.setdefault("BLUE_WHALE_PET_INSTALLED", "1")
+    os.environ.setdefault(
+        "BLUE_WHALE_PET_ASSETS", os.path.join(_INSTALL_ROOT, "assets")
+    )
+
+    # 与开发态一致：sys.argv[0] 指向 src/main.py
+    sys.argv[0] = _ENTRY
+    # 以 __main__ 执行，src/main.py 末尾的 `if __name__ == "__main__"` 正常生效
+    runpy.run_path(_ENTRY, run_name="__main__")
+    return 0
+
+
+if __name__ == "__main__":
+    try:
+        raise SystemExit(main())
+    except SystemExit:
+        raise

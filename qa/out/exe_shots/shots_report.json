@@ -1,0 +1,219 @@
+{
+  "screen": [
+    1920,
+    1080
+  ],
+  "scenes": [
+    {
+      "label": "hero",
+      "cmd": [
+        "C:\\Users\\38495\\AppData\\Local\\Temp\\bwpet-qa-portable\\BlueWhalePet-Portable-1.0.0.exe",
+        "--config",
+        "C:\\Users\\38495\\OneDrive\\文档\\deepseek-harness\\default-workspace\\blue-whale-pet\\qa\\out\\exe_shots\\shot-config.json",
+        "--demo-chat",
+        "你好呀"
+      ],
+      "windows": [],
+      "shots": [
+        {
+          "file": "C:\\Users\\38495\\OneDrive\\文档\\deepseek-harness\\default-workspace\\blue-whale-pet\\qa\\out\\exe_shots\\hero_full_00.png",
+          "title": "__fullscreen__",
+          "rect": [
+            0,
+            0,
+            1920,
+            1080
+          ]
+        },
+        {
+          "file": "C:\\Users\\38495\\OneDrive\\文档\\deepseek-harness\\default-workspace\\blue-whale-pet\\qa\\out\\exe_shots\\hero_full_01.png",
+          "title": "__fullscreen__",
+          "rect": [
+            0,
+            0,
+            1920,
+            1080
+          ]
+        }
+      ]
+    },
+    {
+      "label": "settings",
+      "cmd": [
+        "C:\\Users\\38495\\AppData\\Local\\Temp\\bwpet-qa-portable\\BlueWhalePet-Portable-1.0.0.exe",
+        "--config",
+        "C:\\Users\\38495\\OneDrive\\文档\\deepseek-harness\\default-workspace\\blue-whale-pet\\qa\\out\\exe_shots\\shot-config-official.json",
+        "--open-settings"
+      ],
+      "windows": [
+        {
+          "hwnd": 25430160,
+          "rect": [
+            588,
+            375,
+            838,
+            625
+          ],
+          "title": "蓝鲸桌宠"
+        }
+      ],
+      "shots": []
+    },
+    {
+      "label": "bubble",
+      "cmd": [
+        "C:\\Users\\38495\\AppData\\Local\\Temp\\bwpet-qa-portable\\BlueWhalePet-Portable-1.0.0.exe",
+        "--config",
+        "C:\\Users\\38495\\OneDrive\\文档\\deepseek-harness\\default-workspace\\blue-whale-pet\\qa\\out\\exe_shots\\shot-config.json",
+        "--demo-chat",
+        "今天也要开心呀"
+      ],
+      "windows": [
+        {
+          "hwnd": 22417866,
+          "rect": [
+            591,
+            293,
+            836,
+            367
+          ],
+          "title": "蓝鲸桌宠-气泡"
+        },
+        {
+          "hwnd": 25495696,
+          "rect": [
+            588,
+            375,
+            838,
+            625
+          ],
+          "title": "蓝鲸桌宠"
+        }
+      ],
+      "shots": []
+    },
+    {
+      "label": "showcase",
+      "cmd": [
+        "C:\\Users\\38495\\AppData\\Local\\Temp\\bwpet-qa-portable\\BlueWhalePet-Portable-1.0.0.exe",
+        "--config",
+        "C:\\Users\\38495\\OneDrive\\文档\\deepseek-harness\\default-workspace\\blue-whale-pet\\qa\\out\\exe_shots\\shot-config.json",
+        "--showcase",
+        "16"
+      ],
+      "windows": [],
+      "shots": [
+        {
+          "file": "C:\\Users\\38495\\OneDrive\\文档\\deepseek-harness\\default-workspace\\blue-whale-pet\\qa\\out\\exe_shots\\showcase_01_蓝鲸桌宠.png",
+          "title": "蓝鲸桌宠",
+          "rect": [
+            588,
+            375,
+            838,
+            625
+          ]
+        },
+        {
+          "file": "C:\\Users\\38495\\OneDrive\\文档\\deepseek-harness\\default-workspace\\blue-whale-pet\\qa\\out\\exe_shots\\showcase_02_蓝鲸桌宠-气泡.png",
+          "title": "蓝鲸桌宠-气泡",
+          "rect": [
+            651,
+            316,
+            776,
+            367
+          ]
+        },
+        {
+          "file": "C:\\Users\\38495\\OneDrive\\文档\\deepseek-harness\\default-workspace\\blue-whale-pet\\qa\\out\\exe_shots\\showcase_02_蓝鲸桌宠.png",
+          "title": "蓝鲸桌宠",
+          "rect": [
+            588,
+            375,
+            838,
+            625
+          ]
+        },
+        {
+          "file": "C:\\Users\\38495\\OneDrive\\文档\\deepseek-harness\\default-workspace\\blue-whale-pet\\qa\\out\\exe_shots\\showcase_03_蓝鲸桌宠-气泡.png",
+          "title": "蓝鲸桌宠-气泡",
+          "rect": [
+            661,
+            316,
+            765,
+            367
+          ]
+        },
+        {
+          "file": "C:\\Users\\38495\\OneDrive\\文档\\deepseek-harness\\default-workspace\\blue-whale-pet\\qa\\out\\exe_shots\\showcase_03_蓝鲸桌宠.png",
+          "title": "蓝鲸桌宠",
+          "rect": [
+            588,
+            375,
+            838,
+            625
+          ]
+        },
+        {
+          "file": "C:\\Users\\38495\\OneDrive\\文档\\deepseek-harness\\default-workspace\\blue-whale-pet\\qa\\out\\exe_shots\\showcase_04_蓝鲸桌宠-气泡.png",
+          "title": "蓝鲸桌宠-气泡",
+          "rect": [
+            644,
+            316,
+            783,
+            367
+          ]
+        },
+        {
+          "file": "C:\\Users\\38495\\OneDrive\\文档\\deepseek-harness\\default-workspace\\blue-whale-pet\\qa\\out\\exe_shots\\showcase_04_蓝鲸桌宠.png",
+          "title": "蓝鲸桌宠",
+          "rect": [
+            588,
+            375,
+            838,
+            625
+          ]
+        },
+        {
+          "file": "C:\\Users\\38495\\OneDrive\\文档\\deepseek-harness\\default-workspace\\blue-whale-pet\\qa\\out\\exe_shots\\showcase_05_蓝鲸桌宠-气泡.png",
+          "title": "蓝鲸桌宠-气泡",
+          "rect": [
+            653,
+            316,
+            773,
+            367
+          ]
+        },
+        {
+          "file": "C:\\Users\\38495\\OneDrive\\文档\\deepseek-harness\\default-workspace\\blue-whale-pet\\qa\\out\\exe_shots\\showcase_05_蓝鲸桌宠.png",
+          "title": "蓝鲸桌宠",
+          "rect": [
+            588,
+            375,
+            838,
+            625
+          ]
+        },
+        {
+          "file": "C:\\Users\\38495\\OneDrive\\文档\\deepseek-harness\\default-workspace\\blue-whale-pet\\qa\\out\\exe_shots\\showcase_06_蓝鲸桌宠-气泡.png",
+          "title": "蓝鲸桌宠-气泡",
+          "rect": [
+            655,
+            316,
+            771,
+            367
+          ]
+        },
+        {
+          "file": "C:\\Users\\38495\\OneDrive\\文档\\deepseek-harness\\default-workspace\\blue-whale-pet\\qa\\out\\exe_shots\\showcase_06_蓝鲸桌宠.png",
+          "title": "蓝鲸桌宠",
+          "rect": [
+            588,
+            375,
+            838,
+            625
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+#!/bin/sh
+# 蓝鲸桌宠 Linux 启动器（安装到 /usr/bin/blue-whale-pet）
+# 说明：应用源码位于 /usr/lib/blue-whale-pet/，入口 main.py 为引导壳。
+# 显式设置环境变量，确保安装版资源/数据目录解析正确（而非开发态目录）：
+#   BLUE_WHALE_PET_ASSETS       -> /usr/lib/blue-whale-pet/assets
+#   BLUE_WHALE_PET_INSTALL_ROOT -> /usr/lib/blue-whale-pet
+#   BLUE_WHALE_PET_INSTALLED=1  -> 标记为系统安装版（数据目录用 ~/.config/blue-whale-pet）
+BLUE_WHALE_PET_ASSETS=/usr/lib/blue-whale-pet/assets
+BLUE_WHALE_PET_INSTALL_ROOT=/usr/lib/blue-whale-pet
+BLUE_WHALE_PET_INSTALLED=1
+export BLUE_WHALE_PET_ASSETS BLUE_WHALE_PET_INSTALL_ROOT BLUE_WHALE_PET_INSTALLED
+exec python3 /usr/lib/blue-whale-pet/main.py "$@"

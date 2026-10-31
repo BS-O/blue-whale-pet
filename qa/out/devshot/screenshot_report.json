@@ -1,0 +1,66 @@
+{
+  "cmd": [
+    "C:\\Users\\38495\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+    "C:\\Users\\38495\\OneDrive\\文档\\deepseek-harness\\default-workspace\\blue-whale-pet\\src\\main.py",
+    "--config",
+    "qa\\out\\devshot\\qa-config.json",
+    "--showcase",
+    "8.0"
+  ],
+  "pid": 45428,
+  "windows": [
+    {
+      "hwnd": 44632802,
+      "rect": [
+        150,
+        300,
+        450,
+        600
+      ]
+    }
+  ],
+  "shots": [
+    {
+      "file": "qa\\out\\devshot\\pet_shot_00.png",
+      "blue_ratio": 0.0,
+      "rect": [
+        150,
+        300,
+        450,
+        600
+      ]
+    },
+    {
+      "file": "qa\\out\\devshot\\pet_shot_01.png",
+      "blue_ratio": 0.198,
+      "rect": [
+        150,
+        300,
+        450,
+        600
+      ]
+    },
+    {
+      "file": "qa\\out\\devshot\\pet_shot_02.png",
+      "blue_ratio": 0.1801,
+      "rect": [
+        150,
+        300,
+        450,
+        600
+      ]
+    },
+    {
+      "file": "qa\\out\\devshot\\pet_shot_03.png",
+      "blue_ratio": 0.1719,
+      "rect": [
+        150,
+        300,
+        450,
+        600
+      ]
+    }
+  ],
+  "ok": true,
+  "blue_ratio_max": 0.19796875
+}

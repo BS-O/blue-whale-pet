@@ -31,9 +31,9 @@
         "blink_2"
       ],
       "durations": [
-        70,
-        70,
-        70
+        60,
+        90,
+        60
       ],
       "loop": false
     },
@@ -44,9 +44,9 @@
         "happy_2"
       ],
       "durations": [
+        220,
         200,
-        200,
-        200
+        240
       ],
       "loop": false
     },
@@ -59,7 +59,7 @@
       "durations": [
         140,
         140,
-        140
+        160
       ],
       "loop": false
     },
@@ -96,11 +96,11 @@
         "sleep_2"
       ],
       "durations": [
-        800,
-        800,
-        800
+        820,
+        980,
+        820
       ],
-      "loop": false
+      "loop": true
     },
     "surprise": {
       "frames": [
@@ -108,8 +108,8 @@
         "surprise_1"
       ],
       "durations": [
-        180,
-        180
+        170,
+        240
       ],
       "loop": false
     },
@@ -119,8 +119,8 @@
         "sad_1"
       ],
       "durations": [
-        500,
-        500
+        520,
+        520
       ],
       "loop": false
     },
@@ -131,7 +131,7 @@
       ],
       "durations": [
         220,
-        220
+        240
       ],
       "loop": false
     },
@@ -141,10 +141,10 @@
         "love_1"
       ],
       "durations": [
-        400,
-        400
+        420,
+        420
       ],
-      "loop": false
+      "loop": true
     },
     "drag": {
       "frames": [
@@ -155,7 +155,7 @@
         150,
         150
       ],
-      "loop": false
+      "loop": true
     },
     "wave": {
       "frames": [

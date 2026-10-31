@@ -1,0 +1,6 @@
+d479574f88ff8df8fa62e99b9cf1735b452f8c32a404691fbb5d631f7f693882  blue-whale-pet-1.0.0-1-any.pkg.tar.zst
+f19f6660706d05b8a42de8872fa2132b1a8eb4945f1244b1f7ca4895ea30c45f  blue-whale-pet-1.0.0.tar.gz
+6f49c72efd1606b6c9e341a513dfcba6c9deccbed105268633d70deae4d3df70  blue-whale-pet.install
+c773985a5d12e46cdf37cf83d7905c1ab062bbc8ceb929f9dd76e608cac153a4  blue-whale-pet_1.0.0_all.deb
+ad0b8d4da7f5fde47f2c0fe67f0dfa391dbb555d363ce24b248bc7500b762a3b  BlueWhalePet-Linux-x86_64
+2ff65766f6693117fef5605e5650e6c92d8281e808767b71dc74a7f7dddcf62b  PKGBUILD

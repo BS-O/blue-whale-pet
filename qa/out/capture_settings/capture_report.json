@@ -1,0 +1,63 @@
+{
+  "cmd": [
+    "C:\\Users\\38495\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+    "C:\\Users\\38495\\OneDrive\\文档\\deepseek-harness\\default-workspace\\blue-whale-pet\\src\\main.py",
+    "--config",
+    "qa/out/demo-config.json",
+    "--open-settings"
+  ],
+  "shots": [
+    {
+      "file": "qa\\out\\capture_settings\\shot_00_w20972992.png",
+      "title": "蓝鲸桌宠-气泡",
+      "rect": [
+        528,
+        266,
+        773,
+        317
+      ]
+    },
+    {
+      "file": "qa\\out\\capture_settings\\shot_00_w11011954.png",
+      "title": "蓝鲸桌宠",
+      "rect": [
+        525,
+        325,
+        775,
+        575
+      ]
+    }
+  ],
+  "windows": [
+    {
+      "hwnd": 19464260,
+      "rect": [
+        1215,
+        152,
+        1908,
+        974
+      ],
+      "title": "设置 - 蓝鲸桌宠"
+    },
+    {
+      "hwnd": 20972992,
+      "rect": [
+        528,
+        266,
+        773,
+        317
+      ],
+      "title": "蓝鲸桌宠-气泡"
+    },
+    {
+      "hwnd": 11011954,
+      "rect": [
+        525,
+        325,
+        775,
+        575
+      ],
+      "title": "蓝鲸桌宠"
+    }
+  ]
+}

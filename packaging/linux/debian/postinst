@@ -1,0 +1,24 @@
+#!/bin/sh
+# 蓝鲸桌宠 .deb 安装后脚本：刷新桌面数据库 / 图标缓存。
+set -e
+
+case "$1" in
+  configure)
+    if command -v update-desktop-database >/dev/null 2>&1; then
+      update-desktop-database -q /usr/share/applications >/dev/null 2>&1 || true
+    fi
+    if command -v gtk-update-icon-cache >/dev/null 2>&1; then
+      gtk-update-icon-cache -q -t -f /usr/share/icons/hicolor >/dev/null 2>&1 || true
+    fi
+    # 确保启动器可执行（防止解包工具丢失权限位）
+    chmod 0755 /usr/bin/blue-whale-pet >/dev/null 2>&1 || true
+    echo "蓝鲸桌宠已安装：可从应用菜单启动，或运行命令 blue-whale-pet"
+    echo "首次使用请在设置窗口填写 DeepSeek API Key（也可不填，使用内置短句）。"
+    ;;
+  abort-upgrade|abort-remove|abort-deconfigure)
+    ;;
+  *)
+    ;;
+esac
+
+exit 0

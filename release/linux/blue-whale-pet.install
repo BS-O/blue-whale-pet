@@ -1,0 +1,40 @@
+# Arch Linux 包安装脚本（makepkg 的 install= 与手工构建的 .INSTALL 共用）
+# 由 pacman 在安装/卸载时调用，$1 为动作名。
+
+post_install() {
+  if command -v update-desktop-database >/dev/null 2>&1; then
+    update-desktop-database -q /usr/share/applications >/dev/null 2>&1 || true
+  fi
+  if command -v gtk-update-icon-cache >/dev/null 2>&1; then
+    gtk-update-icon-cache -q -t -f /usr/share/icons/hicolor >/dev/null 2>&1 || true
+  fi
+  chmod 0755 /usr/bin/blue-whale-pet >/dev/null 2>&1 || true
+  echo "蓝鲸桌宠已安装：可从应用菜单启动，或运行命令 blue-whale-pet"
+  echo "首次使用请在设置窗口填写 DeepSeek API Key（也可不填，使用内置短句）。"
+}
+
+post_upgrade() {
+  post_install
+}
+
+pre_remove() {
+  # 清理各用户的开机自启项（保留 ~/.config/blue-whale-pet 用户配置）
+  if command -v getent >/dev/null 2>&1; then
+    getent passwd 2>/dev/null \
+      | awk -F: '$3 >= 1000 && $3 < 65534 && $6 != "" { print $6 }' \
+      | while IFS= read -r home; do
+          rm -f "$home/.config/autostart/blue-whale-pet.desktop" 2>/dev/null || true
+        done || true
+  fi
+  return 0
+}
+
+post_remove() {
+  if command -v update-desktop-database >/dev/null 2>&1; then
+    update-desktop-database -q /usr/share/applications >/dev/null 2>&1 || true
+  fi
+  if command -v gtk-update-icon-cache >/dev/null 2>&1; then
+    gtk-update-icon-cache -q -t -f /usr/share/icons/hicolor >/dev/null 2>&1 || true
+  fi
+  echo "已移除 蓝鲸桌宠。用户配置保留在 ~/.config/blue-whale-pet/（不需要可手动删除）。"
+}

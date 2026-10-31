@@ -1,0 +1,52 @@
+.TH BLUE-WHALE-PET 1 "2026-10-30" "blue-whale-pet 1.0.0" "用户命令"
+.SH 名称
+blue-whale-pet \- 蓝鲸桌宠（DeepSeek 主题桌面宠物 / 蓝色大肥鱼）
+.SH 概要
+.B blue-whale-pet
+[\fI\,选项\/...]
+.SH 描述
+.B blue-whale-pet
+在桌面上显示一只透明、置顶、无边框的蓝鲸桌宠。它会眨眼、待机呼吸、睡觉，
+支持 14 种表情动画；左键戳一戳会显示气泡短句，双击可聊天（DeepSeek API 流式回复），
+右键拖拽可移动，滚轮可缩放。所有交互与设置均持久化到用户配置目录。
+.PP
+本程序不写入系统目录，用户数据保存在
+.I ~/.config/blue-whale-pet/
+（可通过环境变量 HOME / XDG_CONFIG_HOME 覆盖）。
+.SH 选项
+.TP
+.B \-\-version
+打印版本号（形如「蓝鲸桌宠 1.0.0」）后退出。
+.TP
+.B \-\-config \fIPATH\fR
+使用指定的配置文件。
+.TP
+.B \-\-selftest
+无人工自动自检（加载资产、创建窗口、切换表情、配置读写往返等），
+成功时在标准输出打印 \fBSELFTEST OK <json>\fR 并返回 0，失败返回 1。
+.TP
+.B \-\-showcase [\fI秒数\fR]
+固定位置循环展示全部表情并显示表情名，到时自动退出（用于截图/验收）。
+.TP
+.B \-\-debug
+将 DEBUG 级日志输出到标准错误。
+.SH 文件
+.TP
+.I ~/.config/blue-whale-pet/config.json
+用户配置（含本地保存的 API Key，文件不会被上传）。
+.TP
+.I ~/.config/blue-whale-pet/logs/app.log
+运行日志（1MB 轮转 ×2）。
+.TP
+.I ~/.config/autostart/blue-whale-pet.desktop
+在设置中开启「开机自启」后生成。
+.SH 示例
+.nf
+  blue-whale-pet                     # 启动桌宠
+  blue-whale-pet --version          # 查看版本
+  blue-whale-pet --selftest         # 自检（可配合 xvfb-run）
+.fi
+.SH 参见
+项目文档：README.md、docs/USAGE.md。
+.SH 作者
+Blue Whale Pet Team。

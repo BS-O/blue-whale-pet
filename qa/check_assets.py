@@ -106,11 +106,15 @@ def main() -> int:
         try:
             im = Image.open(path)
             im.load()
-            got = set()
-            n = getattr(im, "n_frames", 1)
-            for i in range(n):
-                im.seek(i)
-                got.add(im.size[0])
+            # Pillow 的 ICO 不暴露 n_frames，多尺寸信息在 im.info["sizes"]；
+            # 兼容部分版本可 seek 的情况，两者取并集。
+            got = {s[0] for s in (im.info.get("sizes") or set())}
+            for i in range(getattr(im, "n_frames", 1)):
+                try:
+                    im.seek(i)
+                    got.add(im.size[0])
+                except (EOFError, ValueError):
+                    break
             check(sizes <= got, f"{path.name}: 尺寸集 {sorted(got)} 不含 {sorted(sizes - got)}")
         except Exception as exc:  # noqa: BLE001
             errors.append(f"{path.name}: 无法解析 ico ({exc})")
@@ -119,6 +123,10 @@ def main() -> int:
     has_sizes(ico / "app.ico", {256, 128, 64, 48, 32, 16})
     has_sizes(ico / "tray.ico", {16, 32})
     has_sizes(ico / "setup.ico", {16, 32, 48, 64, 128, 256})
+    if (assets / "installer" / "setup.ico").exists():
+        has_sizes(assets / "installer" / "setup.ico", {16, 32, 48, 64, 128, 256})
+    else:
+        errors.append("缺少 assets/installer/setup.ico")
     ap_png = ico / "app.png"
     if ap_png.exists():
         im = Image.open(ap_png)

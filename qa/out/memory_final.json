@@ -1,0 +1,145 @@
+﻿{
+    "exe":  "C:\\Users\\38495\\AppData\\Local\\Temp\\bwpet-qa-portable\\BlueWhalePet-Portable-1.0.0.exe",
+    "exe_name":  "BlueWhalePet-Portable-1.0.0",
+    "ok":  true,
+    "samples":  [
+                    {
+                        "t":  0,
+                        "processes":  2,
+                        "pids":  [
+                                     28988,
+                                     51496
+                                 ],
+                        "working_set_mb":  36.79,
+                        "private_mb":  18.25,
+                        "cpu_seconds":  3
+                    },
+                    {
+                        "t":  1,
+                        "processes":  2,
+                        "pids":  [
+                                     28988,
+                                     51496
+                                 ],
+                        "working_set_mb":  55.2,
+                        "private_mb":  27.89,
+                        "cpu_seconds":  3.48
+                    },
+                    {
+                        "t":  2,
+                        "processes":  2,
+                        "pids":  [
+                                     28988,
+                                     51496
+                                 ],
+                        "working_set_mb":  56.73,
+                        "private_mb":  28.79,
+                        "cpu_seconds":  3.61
+                    },
+                    {
+                        "t":  3,
+                        "processes":  2,
+                        "pids":  [
+                                     28988,
+                                     51496
+                                 ],
+                        "working_set_mb":  56.75,
+                        "private_mb":  28.79,
+                        "cpu_seconds":  3.62
+                    },
+                    {
+                        "t":  4,
+                        "processes":  2,
+                        "pids":  [
+                                     28988,
+                                     51496
+                                 ],
+                        "working_set_mb":  56.75,
+                        "private_mb":  28.79,
+                        "cpu_seconds":  3.62
+                    },
+                    {
+                        "t":  5,
+                        "processes":  2,
+                        "pids":  [
+                                     28988,
+                                     51496
+                                 ],
+                        "working_set_mb":  56.75,
+                        "private_mb":  28.79,
+                        "cpu_seconds":  3.64
+                    },
+                    {
+                        "t":  6,
+                        "processes":  2,
+                        "pids":  [
+                                     28988,
+                                     51496
+                                 ],
+                        "working_set_mb":  57.31,
+                        "private_mb":  29.2,
+                        "cpu_seconds":  3.7
+                    },
+                    {
+                        "t":  7,
+                        "processes":  2,
+                        "pids":  [
+                                     28988,
+                                     51496
+                                 ],
+                        "working_set_mb":  57.31,
+                        "private_mb":  29.2,
+                        "cpu_seconds":  3.72
+                    },
+                    {
+                        "t":  8,
+                        "processes":  2,
+                        "pids":  [
+                                     28988,
+                                     51496
+                                 ],
+                        "working_set_mb":  57.31,
+                        "private_mb":  29.2,
+                        "cpu_seconds":  3.73
+                    },
+                    {
+                        "t":  9,
+                        "processes":  2,
+                        "pids":  [
+                                     28988,
+                                     51496
+                                 ],
+                        "working_set_mb":  57.31,
+                        "private_mb":  29.2,
+                        "cpu_seconds":  3.73
+                    },
+                    {
+                        "t":  10,
+                        "processes":  2,
+                        "pids":  [
+                                     28988,
+                                     51496
+                                 ],
+                        "working_set_mb":  57.31,
+                        "private_mb":  29.19,
+                        "cpu_seconds":  3.73
+                    },
+                    {
+                        "t":  11,
+                        "processes":  2,
+                        "pids":  [
+                                     28988,
+                                     51496
+                                 ],
+                        "working_set_mb":  57.31,
+                        "private_mb":  29.19,
+                        "cpu_seconds":  3.75
+                    }
+                ],
+    "max_working_set_mb":  57.31,
+    "avg_working_set_mb":  55.24,
+    "target_mb":  60,
+    "target_met":  true,
+    "residual_processes":  0,
+    "timestamp":  "2026-10-31T17:20:18.1491896+08:00"
+}

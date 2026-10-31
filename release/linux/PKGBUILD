@@ -1,0 +1,37 @@
+# Maintainer: Blue Whale Pet Team <blue-whale-pet@example.com>
+# 蓝鲸桌宠（Blue Whale Pet / 蓝色大肥鱼）Arch Linux PKGBUILD
+#
+# 说明：
+#   * 源码 tarball 与 PKGBUILD 由 packaging/linux/build_linux.sh 生成并填入
+#     sha256sums；离线环境可直接在含 tarball 的目录运行 `makepkg -si`。
+#   * 没有 makepkg 时，预构建包 blue-whale-pet-1.0.0-1-any.pkg.tar.zst 可直接
+#     `sudo pacman -U blue-whale-pet-1.0.0-1-any.pkg.tar.zst`。
+#   * 安装布局与 .deb 完全一致：/usr/lib/blue-whale-pet/{main.py,src/,assets/}。
+pkgname=blue-whale-pet
+pkgver=1.0.0
+pkgrel=1
+pkgdesc="蓝鲸桌宠 - DeepSeek 主题桌面宠物（蓝色大肥鱼）"
+arch=('any')
+url="https://github.com/blue-whale-pet/blue-whale-pet"
+license=('MIT')
+depends=('python' 'tk' 'python-pillow')
+optdepends=('python-pystray: 可选系统托盘支持（无则使用宠物右键菜单）')
+makedepends=('python')
+install="$pkgname.install"
+source=("$pkgname-$pkgver.tar.gz")
+sha256sums=('f19f6660706d05b8a42de8872fa2132b1a8eb4945f1244b1f7ca4895ea30c45f')
+
+package() {
+  cd "$srcdir/$pkgname-$pkgver"
+  # 复用打包公共函数铺安装树：与 .deb 完全一致的文件布局
+  # （main.py 引导壳 / src/ / assets/ / usr/bin 启动器 / desktop / hicolor 图标 / man）
+  bash -c '
+    set -euo pipefail
+    BWP_VERSION="'"$pkgver"'"
+    . "$0/packaging/linux/common.sh"
+    stage_tree "$0" "$0/packaging/linux/debian" "'"$pkgdir"'"
+  ' "$srcdir/$pkgname-$pkgver"
+  # 显式确认启动器带 BLUE_WHALE_PET_ASSETS（stage_tree 使用 debian 模板，已包含）
+  grep -q 'BLUE_WHALE_PET_ASSETS=/usr/lib/blue-whale-pet/assets' \
+    "$pkgdir/usr/bin/blue-whale-pet"
+}

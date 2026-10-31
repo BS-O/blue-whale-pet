@@ -1,0 +1,79 @@
+﻿{
+    "setup":  "C:\\Users\\38495\\OneDrive\\文档\\deepseek-harness\\default-workspace\\blue-whale-pet\\release\\windows\\BlueWhalePet-Setup-1.0.0.exe",
+    "install_dir":  "C:\\Users\\38495\\AppData\\Local\\Programs\\BlueWhalePet",
+    "steps":  [
+                  {
+                      "step":  "silent-install-exit",
+                      "ok":  true,
+                      "detail":  "exit=0"
+                  },
+                  {
+                      "step":  "install-dir",
+                      "ok":  true,
+                      "detail":  "C:\\Users\\38495\\AppData\\Local\\Programs\\BlueWhalePet"
+                  },
+                  {
+                      "step":  "uninstaller-copied",
+                      "ok":  true,
+                      "detail":  "C:\\Users\\38495\\AppData\\Local\\Programs\\BlueWhalePet\\uninstall.exe"
+                  },
+                  {
+                      "step":  "assets-present",
+                      "ok":  true,
+                      "detail":  "need assets bundled"
+                  },
+                  {
+                      "step":  "uninstall-registry",
+                      "ok":  true,
+                      "detail":  "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\BlueWhalePet"
+                  },
+                  {
+                      "step":  "registry-displayname",
+                      "ok":  true,
+                      "detail":  "DisplayName=蓝鲸桌宠（蓝色大肥鱼）"
+                  },
+                  {
+                      "step":  "registry-version",
+                      "ok":  true,
+                      "detail":  "DisplayVersion=1.0.0"
+                  },
+                  {
+                      "step":  "registry-uninstallstring",
+                      "ok":  true,
+                      "detail":  "UninstallString=\"C:\\Users\\38495\\AppData\\Local\\Programs\\BlueWhalePet\\uninstall.exe\" /uninstall"
+                  },
+                  {
+                      "step":  "launch-alive",
+                      "ok":  false,
+                      "detail":  "pid="
+                  },
+                  {
+                      "step":  "silent-uninstall-exit",
+                      "ok":  false,
+                      "detail":  "exit=-1"
+                  },
+                  {
+                      "step":  "residual-start-menu",
+                      "ok":  true,
+                      "detail":  "should be gone"
+                  },
+                  {
+                      "step":  "residual-desktop",
+                      "ok":  true,
+                      "detail":  "should be gone"
+                  },
+                  {
+                      "step":  "residual-registry",
+                      "ok":  true,
+                      "detail":  "should be gone"
+                  },
+                  {
+                      "step":  "residual-autostart",
+                      "ok":  true,
+                      "detail":  "Run="
+                  }
+              ],
+    "ok":  false,
+    "failed_count":  2,
+    "timestamp":  "2026-10-31T17:37:44.6637094+08:00"
+}

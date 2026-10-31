@@ -1,0 +1,38 @@
+{
+  "version": 1,
+  "api": {
+    "key": "qa-test-key",
+    "base_url": "http://127.0.0.1:8765",
+    "model": "deepseek-flash",
+    "max_tokens": 120,
+    "temperature": 1.3,
+    "timeout": 30
+  },
+  "pet": {
+    "size": 200,
+    "x": 420,
+    "y": 260,
+    "always_on_top": true,
+    "opacity": 1.0,
+    "click_through": false
+  },
+  "speech": {
+    "persona": "（内置人设，见 src/prompts.py）",
+    "max_chars": 60,
+    "typewriter": true,
+    "bubble_seconds": 30
+  },
+  "behavior": {
+    "idle_animation": true,
+    "auto_sleep_seconds": 180,
+    "greet_on_start": true,
+    "wheel_resize": true,
+    "click_actions": true
+  },
+  "system": {
+    "autostart": false,
+    "tray": true,
+    "language": "zh",
+    "first_run": false
+  }
+}

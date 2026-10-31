@@ -1,0 +1,56 @@
+{
+  "mock": true,
+  "checks": [
+    {
+      "check": "window-appear",
+      "ok": true,
+      "detail": "[\"蓝鲸桌宠\"]"
+    },
+    {
+      "check": "config-pos",
+      "ok": true,
+      "detail": "x=320 y=300"
+    },
+    {
+      "check": "poke-bubble",
+      "ok": true,
+      "detail": "气泡窗口出现=True; white_px=355"
+    },
+    {
+      "check": "right-drag-move",
+      "ok": true,
+      "detail": "dx=128 dy=48 -> x=448 y=252"
+    },
+    {
+      "check": "wheel-resize",
+      "ok": true,
+      "detail": "220 -> 244"
+    },
+    {
+      "check": "chat-window-open",
+      "ok": true,
+      "detail": "['和蓝鲸聊天 - 蓝鲸桌宠']"
+    },
+    {
+      "check": "chat-stream-reply",
+      "ok": true,
+      "detail": "mock completions +1, stream +1, model=deepseek-flash, shot=white_px=5901"
+    },
+    {
+      "check": "single-instance",
+      "ok": true,
+      "detail": "第二实例运行中=False（允许其自行退出）"
+    },
+    {
+      "check": "app-alive-after-actions",
+      "ok": true,
+      "detail": "poll=None"
+    }
+  ],
+  "shots": [
+    "qa\\out\\interact_final\\02_poke.png",
+    "qa\\out\\interact_final\\05_chat_reply.png"
+  ],
+  "pid": 50588,
+  "ok": true
+}

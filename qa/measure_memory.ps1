@@ -1,5 +1,5 @@
-# 桌宠空载内存采样（Lead QA）
-# 用法: powershell -NoProfile -ExecutionPolicy Bypass -File qa/measure_memory.ps1 -Exe "release/windows/BlueWhalePet-Portable-1.0.0.exe"
+﻿# Desktop pet idle memory sampling (Lead QA)
+# Usage: powershell -NoProfile -ExecutionPolicy Bypass -File qa/measure_memory.ps1 -Exe "<exe>"
 param(
   [Parameter(Mandatory=$true)][string]$Exe,
   [int]$DurationSec = 12,
@@ -55,7 +55,7 @@ $result = [pscustomobject]@{
 }
 $result | ConvertTo-Json -Depth 6 | Set-Content -Path $OutFile -Encoding UTF8
 Write-Output ("MEMORY " + ($(if ($result.target_met) { "OK" } else { "WARN" })) + " max=" + $maxWs + "MB avg=" + $avgWs + "MB processes=" + ($samples[0].processes) + " report=" + $OutFile)
-if ($result.residual_processes -gt 0) { Write-Output "WARN: 进程未完全退出" }
+if ($result.residual_processes -gt 0) { Write-Output "WARN: process still running" }
 if (-not $ok) { exit 1 }
 if (-not $result.target_met) { exit 2 }
 exit 0

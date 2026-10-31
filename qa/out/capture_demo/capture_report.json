@@ -1,0 +1,135 @@
+{
+  "cmd": [
+    "C:\\Users\\38495\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+    "C:\\Users\\38495\\OneDrive\\文档\\deepseek-harness\\default-workspace\\blue-whale-pet\\src\\main.py",
+    "--config",
+    "qa/out/demo-config.json",
+    "--demo-chat",
+    "你好呀",
+    "--open-settings"
+  ],
+  "shots": [
+    {
+      "file": "qa\\out\\capture_demo\\shot_00_w7016350.png",
+      "title": "设置 - 蓝鲸桌宠",
+      "rect": [
+        96,
+        96,
+        314,
+        343
+      ]
+    },
+    {
+      "file": "qa\\out\\capture_demo\\shot_00_w16257858.png",
+      "title": "和蓝鲸聊天 - 蓝鲸桌宠",
+      "rect": [
+        790,
+        100,
+        1346,
+        622
+      ]
+    },
+    {
+      "file": "qa\\out\\capture_demo\\shot_00_w21237730.png",
+      "title": "蓝鲸桌宠-气泡",
+      "rect": [
+        528,
+        243,
+        773,
+        317
+      ]
+    },
+    {
+      "file": "qa\\out\\capture_demo\\shot_00_w45681378.png",
+      "title": "蓝鲸桌宠",
+      "rect": [
+        525,
+        325,
+        775,
+        575
+      ]
+    },
+    {
+      "file": "qa\\out\\capture_demo\\shot_01_w16257858.png",
+      "title": "和蓝鲸聊天 - 蓝鲸桌宠",
+      "rect": [
+        790,
+        100,
+        1346,
+        622
+      ]
+    },
+    {
+      "file": "qa\\out\\capture_demo\\shot_01_w7016350.png",
+      "title": "设置 - 蓝鲸桌宠",
+      "rect": [
+        610,
+        140,
+        1328,
+        987
+      ]
+    },
+    {
+      "file": "qa\\out\\capture_demo\\shot_01_w21237730.png",
+      "title": "蓝鲸桌宠-气泡",
+      "rect": [
+        528,
+        243,
+        773,
+        317
+      ]
+    },
+    {
+      "file": "qa\\out\\capture_demo\\shot_01_w45681378.png",
+      "title": "蓝鲸桌宠",
+      "rect": [
+        525,
+        325,
+        775,
+        575
+      ]
+    }
+  ],
+  "windows": [
+    {
+      "hwnd": 16257858,
+      "rect": [
+        790,
+        100,
+        1346,
+        622
+      ],
+      "title": "和蓝鲸聊天 - 蓝鲸桌宠"
+    },
+    {
+      "hwnd": 7016350,
+      "rect": [
+        610,
+        140,
+        1328,
+        987
+      ],
+      "title": "设置 - 蓝鲸桌宠"
+    },
+    {
+      "hwnd": 21237730,
+      "rect": [
+        528,
+        243,
+        773,
+        317
+      ],
+      "title": "蓝鲸桌宠-气泡"
+    },
+    {
+      "hwnd": 45681378,
+      "rect": [
+        525,
+        325,
+        775,
+        575
+      ],
+      "title": "蓝鲸桌宠"
+    }
+  ]
+}

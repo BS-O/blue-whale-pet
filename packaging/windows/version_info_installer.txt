@@ -1,0 +1,33 @@
+# PyInstaller Windows 版本资源（安装器）
+VSVersionInfo(
+  ffi=FixedFileInfo(
+    filevers=(1, 0, 0, 0),
+    prodvers=(1, 0, 0, 0),
+    mask=0x3f,
+    flags=0x0,
+    OS=0x40004,
+    fileType=0x1,
+    subtype=0x0,
+    date=(0, 0)
+  ),
+  kids=[
+    StringFileInfo(
+      [
+        StringTable(
+          '080404b0',
+          [
+            StringStruct('CompanyName', 'BlueWhalePet Project'),
+            StringStruct('FileDescription', '\u84dd\u9cb8\u684c\u5ba0 \u5b89\u88c5\u7a0b\u5e8f'),
+            StringStruct('FileVersion', '1.0.0'),
+            StringStruct('InternalName', 'BlueWhalePet-Setup'),
+            StringStruct('LegalCopyright', 'MIT License; DeepSeek whale logo (c) DeepSeek, non-official fan project'),
+            StringStruct('OriginalFilename', 'BlueWhalePet-Setup-1.0.0.exe'),
+            StringStruct('ProductName', '\u84dd\u9cb8\u684c\u5ba0'),
+            StringStruct('ProductVersion', '1.0.0')
+          ]
+        )
+      ]
+    ),
+    VarFileInfo([VarStruct('Translation', [2052, 1200])])
+  ]
+)

@@ -1,0 +1,21 @@
+Package: blue-whale-pet
+Version: @VERSION@
+Section: utils
+Priority: optional
+Architecture: all
+Maintainer: @MAINTAINER@
+Installed-Size: @INSTALLED_SIZE@
+Depends: python3 (>= 3.9), python3-tk, python3-pil, python3-pil.imagetk
+@RECOMMENDS@
+Description: 蓝鲸桌宠 - DeepSeek 主题桌面宠物（蓝色大肥鱼）
+ 常驻桌面的透明置顶桌宠：会眨眼、会说话、支持 14 种表情动画、
+ 戳一戳互动、双击聊天（DeepSeek API 流式回复）、右键拖拽移动、
+ 滚轮缩放、托盘菜单、设置窗口与开机自启。
+ .
+ 本包为 Debian/Ubuntu 系 Linux 安装版：
+  * 应用源码安装在 /usr/lib/blue-whale-pet/
+  * 命令行入口 /usr/bin/blue-whale-pet
+  * 桌面菜单项 /usr/share/applications/blue-whale-pet.desktop
+  * 系统图标 /usr/share/icons/hicolor/
+ .
+ 用户配置保存在 ~/.config/blue-whale-pet/config.json（卸载时保留）。
