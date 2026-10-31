@@ -396,7 +396,11 @@ class PetApp:
         self.show_bubble(line)
         candidates = [s for s in ("happy", "laugh", "surprise", "love", "angry") if self.manifest.has_state(s)]
         if candidates:
-            self._play_state(random.choice(candidates), loop=False, on_end=self._on_state_end)
+            state = random.choice(candidates)
+            # 愤怒 50% 概率切换到 angry_alt（4.jpg 版），其余用 1.png 愤怒小鱼
+            if state == "angry" and self.manifest.has_state("angry_alt") and random.random() < 0.5:
+                state = "angry_alt"
+            self._play_state(state, loop=False, on_end=self._on_state_end)
 
     def on_double_click(self) -> None:
         if self._closed:
@@ -405,10 +409,10 @@ class PetApp:
         self.open_chat()
 
     def on_context_menu(self, x: int, y: int) -> None:
+        # 桌宠本体上右键不再弹出菜单（用户要求）；托盘菜单仍提供全部功能
         if self._closed:
             return
         self.mark_interaction()
-        self._show_context_menu(x, y)
 
     def on_drag_start(self) -> None:
         if self._closed:
@@ -883,7 +887,7 @@ class PetApp:
         pet_cfg = self.cfg.get("pet") or {}
         system_cfg = self.cfg.get("system") or {}
         menu = tk.Menu(self.root, tearoff=0)
-        menu.add_command(label="和蓝鲸聊聊", command=self.open_chat)
+        menu.add_command(label="和大肥鱼聊聊", command=self.open_chat)
         menu.add_command(label="设置…", command=self.open_settings)
         menu.add_separator()
         menu.add_command(label="隐藏桌宠" if self.pet.visible else "显示桌宠", command=self.toggle_show)

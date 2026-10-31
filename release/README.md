@@ -23,8 +23,8 @@
 ## 校验值速览
 
 ```text
-14eb7f2f26f6a820f14e147fecb1d254caa316c3d300ebd39cf5f9c71bdebfcb  windows/BlueWhalePet-Portable-1.0.0.exe
-f44d43177cb64c57c2211932569efa47bcbc49055cc6089e661a6d94aba4645c  windows/BlueWhalePet-Setup-1.0.0.exe
-5b42532821643225728e75d92dc174db5d81d5b8a0832ab1530992897e94c2e3  linux/blue-whale-pet_1.0.0_all.deb
-e6830f2a46e82f9f54b95b9672650752d813f3c6ceead639f904a96e3e9d5571  linux/blue-whale-pet-1.0.0-1-any.pkg.tar.zst
+8eaf0d3491e435ecfc4df633f7146aa07065ebe1133a9b4d2034860715032af4  windows/BlueWhalePet-Portable-1.0.0.exe
+560796f1901ddef4d1866519bf69bff78f1f9a73ba161a977287806d64ed5315  windows/BlueWhalePet-Setup-1.0.0.exe
+3004b895a4f800bc6c402e287e9687fd3703f5235e231891234c62ac2675ced8  linux/blue-whale-pet_1.0.0_all.deb
+6e6b4be1ef475a8280e5c6af165f486153f439ecbfe08ed4fc249a790cc3ff20  linux/blue-whale-pet-1.0.0-1-any.pkg.tar.zst
 ```

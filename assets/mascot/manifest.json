@@ -182,6 +182,17 @@
         260
       ],
       "loop": true
+    },
+    "angry_alt": {
+      "frames": [
+        "angryalt_0",
+        "angryalt_1"
+      ],
+      "durations": [
+        220,
+        240
+      ],
+      "loop": false
     }
   }
 }

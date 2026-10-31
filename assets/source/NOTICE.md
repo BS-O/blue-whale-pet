@@ -69,3 +69,16 @@
 - 其余素材用途：1.png 双排小鱼贴纸表（备选/贴纸）、4.jpg 方形蓝角色（候选 2）、
   2.png / 3.png 为多角色复杂场景，背景无法干净分离，仅存档不参与抠图。
 - 候选图版权归原作者所有，仅本机使用。
+
+## 2026-10-31 深夜 · 多素材状态系统（v4，用户指定）
+
+- 用户指定：各状态使用 1.png（贴纸表）+ 修改后的 1.png（抠出小鱼）+ 2~5 号图；
+  **4.jpg 仅在愤怒状态以 50% 概率出现**（另 50% 为 1.png 愤怒小鱼版）。
+- 分工：5.png 主体 → idle/blink/drag；1.png 七只小鱼（extract_sheet_fish.py 抠图+锐化）
+  → happy(fish_1)/laugh(fish_4)/talk(fish_0)/think(fish_6)/sleep(fish_5)/
+  surprise(fish_2)/sad(fish_0)/love(fish_1)/wave(fish_2)/eat(fish_3 张嘴)/angry(fish_3+青筋)；
+  4.jpg → angry_alt（angryalt_0/1）；2.png/3.png → talk/think 帧内的圆角小照片点缀
+  （多角色场景无法作主体）。
+- 实现：manifest 新增 `angry_alt` 状态（第 15 个），app 戳一戳触发愤怒时 50% 抽签切换；
+  生成器 `tools/gen_mascot_images.py`（40 帧输出）。
+- 交互变更（用户要求）：**桌宠本体右键不再弹出菜单**（保留托盘菜单作为功能入口）。

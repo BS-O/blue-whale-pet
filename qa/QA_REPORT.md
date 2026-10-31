@@ -99,3 +99,14 @@ deb/Arch 为 2026-10-31 postrm 修复后重打（修复过程见 §7）。全量
 - **图标 v3**：PICK=5（head 854×813）；app.ico 6 档齐全；app.png 512。
 - **四端验证**：dev/便携 selftest OK（38 帧）；安装器 1048 文件 + 38 帧内嵌；DEB VERIFY OK。
 - 产物体积：便携 22.0→26.7MB、安装 34.1→37.3MB（照片级 PNG 帧所致，仍在预算内）。
+
+---
+
+## 11. r4 轮增量 QA（2026-10-31 21:0x–21:2x，多素材 + 交互变更）
+
+- **多素材状态**：1.png 贴纸表抠出 7 只小鱼（≥3000px 连通域，LANCZOS×2.3 + UnsharpMask）
+  分配 10 个表情状态；manifest 新增第 15 个状态 angry_alt（durations 220/240）；
+  戳一戳愤怒 50% 抽签（app.py on_poke）。79/79 测试；dev/便携 selftest 40 帧全载、15 状态切换。
+- **右键菜单**：桌宠本体 on_context_menu 仅 mark_interaction（无菜单）；托盘菜单保留。
+  注意：托盘为设置/退出唯一入口（托盘默认开启）。
+- **产物**：便携 29.2MB / 安装 39.8MB（1050 文件）；DEB VERIFY OK；RELEASE OK（SHA256SUMS 同步）。

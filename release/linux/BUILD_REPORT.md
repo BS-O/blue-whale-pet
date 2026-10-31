@@ -59,3 +59,9 @@
 
 - 桌宠 38 帧更换为 5.png 主体合成；图标 v3 同步。deb `5b42532821643225`、arch `e6830f2a46e82f9f`。
 - 验证：DEB VERIFY OK（14 状态/38 帧、`--version` 蓝色大肥鱼 1.0.0、WSLg 真窗口、卸载无残留）。
+
+---
+
+## r4 重打（2026-10-31，多素材状态系统）
+
+- 40 帧/15 状态（含 angry_alt）；deb `3004b895a4f800bc`、arch `6e6b4be1ef475a82`；DEB VERIFY OK。
