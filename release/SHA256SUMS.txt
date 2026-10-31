@@ -1,9 +1,9 @@
-18aae495fe47dcb492a2d0aa7e66be37c5750be14a5071eb8dc1567b9bfae16e  linux/blue-whale-pet-1.0.0-1-any.pkg.tar.zst
-6d68154e5e9dc5d96229171f7fed149c7af1ad655c082e89da29b11a0b2d9c75  linux/blue-whale-pet-1.0.0.tar.gz
+e6830f2a46e82f9f54b95b9672650752d813f3c6ceead639f904a96e3e9d5571  linux/blue-whale-pet-1.0.0-1-any.pkg.tar.zst
+21dbd74b5078297454bffa847fda6dcea9db45733fd2008c2e4fac9356255225  linux/blue-whale-pet-1.0.0.tar.gz
 3cf333502b3f41ea2499487759c19001eda2a3ad394f07368ce1683d0b6116f7  linux/blue-whale-pet.install
-7db898626373462ae6fe36fe9e1ca8172f6f3ac0737d2d89cbe97bb059769f9f  linux/blue-whale-pet_1.0.0_all.deb
+5b42532821643225728e75d92dc174db5d81d5b8a0832ab1530992897e94c2e3  linux/blue-whale-pet_1.0.0_all.deb
 ad0b8d4da7f5fde47f2c0fe67f0dfa391dbb555d363ce24b248bc7500b762a3b  linux/BlueWhalePet-Linux-x86_64
-f47bb5c500eeedf8928919e7df4a2c57c801de2b099cd30b02bea162957595d4  linux/PKGBUILD
-eb156579e794632914b2ea3fb2f3ac8a6c8ead0733535e7241e14303d13e69c5  README.md
-c74887eab5599183d99a81bfbb5f4000d406f8acb4b5004b7b2e0f79ba0745f0  windows/BlueWhalePet-Portable-1.0.0.exe
-173849dca0d12682047c72a1eef69c47c0367e13df73afc7b3e7e8c096e4bed3  windows/BlueWhalePet-Setup-1.0.0.exe
+0a0a244271471d7d5d942172557e29f697b222ab568ae4b8943a52cc995fb935  linux/PKGBUILD
+fd47c024fc54085ff54e1f7049dac6971d2bb68411b6ed022cc7d04d545efd2e  README.md
+14eb7f2f26f6a820f14e147fecb1d254caa316c3d300ebd39cf5f9c71bdebfcb  windows/BlueWhalePet-Portable-1.0.0.exe
+f44d43177cb64c57c2211932569efa47bcbc49055cc6089e661a6d94aba4645c  windows/BlueWhalePet-Setup-1.0.0.exe

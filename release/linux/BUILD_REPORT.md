@@ -52,3 +52,10 @@
 - 新增 GLM 平台适配随源码打包（设置窗口平台切换，见 Windows r2 说明）。
 - 产物：deb `7db898626373462a`（1,775,x B）、arch `18aae495fe47dcb4`；完整值 SHA256SUMS.txt。
 - 验证：`dpkg -i` → `--version` 输出「蓝色大肥鱼 1.0.0」→ `xvfb-run --selftest` 15/15（app=蓝色大肥鱼，42.07MB）→ WSLg 真窗口 → `dpkg -r` 无残留。`DEB VERIFY OK`。
+
+---
+
+## r3 重打（2026-10-31，桌宠本体更换 + 图标 v3）
+
+- 桌宠 38 帧更换为 5.png 主体合成；图标 v3 同步。deb `5b42532821643225`、arch `e6830f2a46e82f9f`。
+- 验证：DEB VERIFY OK（14 状态/38 帧、`--version` 蓝色大肥鱼 1.0.0、WSLg 真窗口、卸载无残留）。

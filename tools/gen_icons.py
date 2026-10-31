@@ -26,7 +26,10 @@ ROOT = Path(__file__).resolve().parent.parent
 ICONS = ROOT / "assets" / "icons"
 HICOLOR = ICONS / "hicolor"
 CANDIDATES_DIR = ROOT / "qa" / "out" / "icon_candidates"
-SOURCES = [1, 2, 3, 5]  # 桌面候选（用户说明含 4.png，实际不存在）
+# 桌面候选：1.png 贴纸表 / 2.png / 3.png 场景图 / 4.jpg 方形蓝角色 / 5.png 高清单体肥鱼
+SOURCES = [1, 2, 3, 4, 5]
+# 5.png 主体瘦长(854×1564)：图标取头部方形裁切（冠+脸+上半身），与桌宠本体同源
+SOURCE_CFG: dict[int, dict] = {5: {"head_frac": 0.52}}
 BRAND_BLUE = (77, 107, 254)        # #4D6BFE
 BRAND_BLUE_DARK = (43, 63, 158)
 LIGHT_BG = (247, 249, 255)
@@ -38,9 +41,11 @@ def load_sources() -> dict[int, Image.Image]:
     out = {}
     desktop = Path.home() / "Desktop"
     for i in SOURCES:
-        p = desktop / f"{i}.png"
-        if p.exists():
-            out[i] = Image.open(p).convert("RGB")
+        for ext in (".png", ".jpg", ".jpeg"):
+            p = desktop / f"{i}{ext}"
+            if p.exists():
+                out[i] = Image.open(p).convert("RGB")
+                break
     return out
 
 
@@ -171,8 +176,8 @@ def largest_component(rgba: Image.Image, min_frac: float = 0.04) -> tuple[Image.
     return out, len(sizes)
 
 
-def extract_subject(im: Image.Image) -> tuple[Image.Image, dict]:
-    """抠图 + 裁边 + 方形衬垫；返回 (RGBA 方图, 统计)。"""
+def extract_subject(im: Image.Image, head_frac: float | None = None) -> tuple[Image.Image, dict]:
+    """抠图 + 裁边 + 方形衬垫；head_frac 时取主体顶部方形裁切（头部模式）。"""
     bg, uniform = border_bg_color(im)
     stats = {"uniform": round(uniform, 2)}
     if uniform > 0.55:
@@ -191,14 +196,20 @@ def extract_subject(im: Image.Image) -> tuple[Image.Image, dict]:
         stats["mode"] = "rounded"
     bbox = rgba.getchannel("A").getbbox() or (0, 0, *rgba.size)
     rgba = rgba.crop(bbox)
-    if stats.get("mode") == "flood":
+    if stats.get("mode") in ("flood", "rounded_fallback"):
         rgba, ncomp = largest_component(rgba)
         stats["components"] = ncomp
+    if head_frac and stats.get("mode") == "flood":
+        w, h = rgba.size
+        # 头部模式：顶部 head_frac 高度内取最大方形（宽为边）
+        side = min(w, int(h * head_frac))
+        rgba = rgba.crop((max(0, (w - side) // 2), 0, max(0, (w - side) // 2) + side, side))
+        stats["mode"] = "flood_head"
     side = max(rgba.size)
-    pad = int(side * 0.06)
+    pad = int(side * 0.04)
     square = Image.new("RGBA", (side + pad * 2, side + pad * 2), (0, 0, 0, 0))
     square.paste(rgba, ((square.size[0] - rgba.size[0]) // 2, (square.size[1] - rgba.size[1]) // 2), rgba)
-    alpha = square.getchannel("A").filter(ImageFilter.GaussianBlur(0.8))
+    alpha = square.getchannel("A").filter(ImageFilter.GaussianBlur(0.5))
     square.putalpha(alpha)
     stats["subject_px"] = square.size
     return square, stats
@@ -249,8 +260,9 @@ def compose_icon(subject: Image.Image, size: int = 1024) -> Image.Image:
     draw = ImageDraw.Draw(canvas)
     m = int(size * 0.035)
     draw.rounded_rectangle((m, m, size - m - 1, size - m - 1), radius=int(size * 0.20), outline=ring + (255,), width=max(3, size // 110))
-    fit = int(size * 0.80)
+    fit = int(size * 0.88)
     subj = subject.resize((fit, fit), Image.LANCZOS)
+    subj = subj.filter(ImageFilter.UnsharpMask(radius=1.6, percent=80, threshold=2))
     canvas.alpha_composite(subj, ((size - fit) // 2, (size - fit) // 2))
     return canvas
 
@@ -274,7 +286,8 @@ def ascii_preview(im: Image.Image, cols: int = 56) -> str:
 
 def score_subject(subject: Image.Image, stats: dict) -> float:
     s = 0.0
-    s += 2.0 if stats.get("mode") == "flood" else 0.0
+    s += 2.0 if stats.get("mode") in ("flood", "flood_head") else 0.0
+    s += 1.5 if stats.get("mode") == "flood_head" else 0.0   # 头部方形裁切最适合作图标
     w, h = subject.size
     s += 1.0 if min(w, h) >= 500 else 0.0
     s += 1.0 - abs(1.0 - w / h)  # 越接近方形越高
@@ -292,8 +305,8 @@ def gen_all(pick: int | None = None) -> None:
     results = {}
     for i, im in sorted(sources.items()):
         work = im.copy()
-        work.thumbnail((1400, 1400), Image.LANCZOS)
-        subject, stats = extract_subject(work)
+        work.thumbnail((2000, 2000), Image.LANCZOS)
+        subject, stats = extract_subject(work, **SOURCE_CFG.get(i, {}))
         icon = compose_icon(subject)
         score = score_subject(subject, stats)
         results[i] = {"subject": subject, "icon": icon, "stats": stats, "score": score}
@@ -302,15 +315,15 @@ def gen_all(pick: int | None = None) -> None:
         print(ascii_preview(subject, 56))
     pick_id = pick or max(results, key=lambda k: results[k]["score"])
     print(f"\nPICK = {pick_id} (auto)" if pick is None else f"\nPICK = {pick_id} (manual)")
-    master = results[pick_id]["icon"].resize((1024, 1024), Image.LANCZOS)
+    master = results[pick_id]["icon"]
     master.save(CANDIDATES_DIR / f"master_{pick_id}.png")
 
     ICONS.mkdir(parents=True, exist_ok=True)
     master.resize((512, 512), Image.LANCZOS).save(ICONS / "app.png")
-    ico_im = master.resize((256, 256), Image.LANCZOS)
-    ico_im.save(ICONS / "app.ico", sizes=[(s, s) for s in ICO_SIZES])
-    ico_im.save(ICONS / "setup.ico", sizes=[(s, s) for s in ICO_SIZES])
-    ico_im.save(ICONS / "tray.ico", sizes=[(48, 48), (32, 32), (16, 16)])
+    # ICO 直接从 1024 母版逐档缩放（避免 256 中转的二次降采样）
+    master.save(ICONS / "app.ico", sizes=[(s, s) for s in ICO_SIZES])
+    master.save(ICONS / "setup.ico", sizes=[(s, s) for s in ICO_SIZES])
+    master.save(ICONS / "tray.ico", sizes=[(48, 48), (32, 32), (16, 16)])
     for s in HICO_SIZES:
         p = HICOLOR / f"{s}x{s}" / "apps"
         p.mkdir(parents=True, exist_ok=True)

@@ -88,3 +88,14 @@ deb/Arch 为 2026-10-31 postrm 修复后重打（修复过程见 §7）。全量
 - **GLM 适配**：config 新增 provider/keys（旧 key 自动迁移）；api.py 按平台取 Key、thinking 按预设注入；设置窗「平台」下拉切换自动带出 Key/模型/Base URL；mock 语义经单元测试覆盖 payload/headers（glm-4.6 + Bearer）。
 - **安装器**：DisplayName 修复为纯 APP_NAME；静默安装 1048 文件、HKCU DisplayName=蓝色大肥鱼、卸载 exit=0。
 - **遗留观察**：Start-Process 方式启动 GUI exe 的 selftest 退出码为 1（bash 直跑为 0，产品行为正常）；安装目录卸载后仍留运行中的 uninstall.exe（同 §6）。
+
+---
+
+## 10. r3 轮增量 QA（2026-10-31 20:1x–21:0x，本体+图标 v3）
+
+- **本体更换**：5.png 洪泛抠图（去除 55%）→ 最大连通域 854×1564 → 38 帧形变+符号合成；
+  人脸分析确认 3/4 侧视单眼（fx≈0.345 fy≈0.150）→ blink/sleep 用单眼 wink 眼睑；
+  ASCII 复核 idle/blink/love/sleep/sad/drag/happy/eat 帧符号与形变均对位。
+- **图标 v3**：PICK=5（head 854×813）；app.ico 6 档齐全；app.png 512。
+- **四端验证**：dev/便携 selftest OK（38 帧）；安装器 1048 文件 + 38 帧内嵌；DEB VERIFY OK。
+- 产物体积：便携 22.0→26.7MB、安装 34.1→37.3MB（照片级 PNG 帧所致，仍在预算内）。
