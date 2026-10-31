@@ -1,4 +1,4 @@
-# 蓝鲸桌宠 v1.0.0 · 发布产物
+# 蓝色大肥鱼 v1.0.0 · 发布产物（r2：更名 + GLM）
 
 > 全部产物由同一份源码与资产构建；校验值见各目录 `SHA256SUMS.txt` 或上级 `SHA256SUMS.txt`。
 
@@ -23,8 +23,8 @@
 ## 校验值速览
 
 ```text
-b095c6a12d74efe3857ba1f22c7a1a9bd8f21efc5f6334227f3063508341fc5c  windows/BlueWhalePet-Portable-1.0.0.exe
-defbb87e8695a7942dfd76efc889a645e26b80bf2cc43d489c2b062f2069c9ee  windows/BlueWhalePet-Setup-1.0.0.exe
-c773985a5d12e46cdf37cf83d7905c1ab062bbc8ceb929f9dd76e608cac153a4  linux/blue-whale-pet_1.0.0_all.deb
-d479574f88ff8df8fa62e99b9cf1735b452f8c32a404691fbb5d631f7f693882  linux/blue-whale-pet-1.0.0-1-any.pkg.tar.zst
+c74887eab5599183d99a81bfbb5f4000d406f8acb4b5004b7b2e0f79ba0745f0  windows/BlueWhalePet-Portable-1.0.0.exe
+173849dca0d12682047c72a1eef69c47c0367e13df73afc7b3e7e8c096e4bed3  windows/BlueWhalePet-Setup-1.0.0.exe
+7db898626373462ae6fe36fe9e1ca8172f6f3ac0737d2d89cbe97bb059769f9f  linux/blue-whale-pet_1.0.0_all.deb
+18aae495fe47dcb492a2d0aa7e66be37c5750be14a5071eb8dc1567b9bfae16e  linux/blue-whale-pet-1.0.0-1-any.pkg.tar.zst
 ```

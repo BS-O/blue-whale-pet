@@ -7,7 +7,7 @@ Maintainer: @MAINTAINER@
 Installed-Size: @INSTALLED_SIZE@
 Depends: python3 (>= 3.9), python3-tk, python3-pil, python3-pil.imagetk
 @RECOMMENDS@
-Description: 蓝鲸桌宠 - DeepSeek 主题桌面宠物（蓝色大肥鱼）
+Description: 蓝色大肥鱼 - AI 桌宠（DeepSeek / GLM）
  常驻桌面的透明置顶桌宠：会眨眼、会说话、支持 14 种表情动画、
  戳一戳互动、双击聊天（DeepSeek API 流式回复）、右键拖拽移动、
  滚轮缩放、托盘菜单、设置窗口与开机自启。

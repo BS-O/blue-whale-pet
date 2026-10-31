@@ -43,7 +43,7 @@ class SettingsWindow:
         width = int(round(520 * self.scale))
         height = int(round(600 * self.scale))
         self.win = tk.Toplevel(root, class_=C.WM_CLASS)
-        self.win.title("设置 - 蓝鲸桌宠")
+        self.win.title("设置 - 蓝色大肥鱼")
         self.win.resizable(False, False)
         self.win.protocol("WM_DELETE_WINDOW", self._on_close)
         try:
@@ -82,7 +82,7 @@ class SettingsWindow:
         except tk.TclError:
             pass
         try:
-            platform_win.set_window_title(self.win, "设置 - 蓝鲸桌宠")
+            platform_win.set_window_title(self.win, "设置 - 蓝色大肥鱼")
         except Exception:  # noqa: BLE001
             pass
 
@@ -102,6 +102,9 @@ class SettingsWindow:
     def _create_vars(self) -> None:
         self.var_api_key = tk.StringVar()
         self.var_show_key = tk.BooleanVar(value=False)
+        self.var_provider = tk.StringVar()
+        self._provider_keys: dict[str, str] = {}
+        self._current_provider: str = C.DEFAULT_PROVIDER
         self.var_model = tk.StringVar()
         self.var_base_url = tk.StringVar()
         self.var_timeout = tk.IntVar(value=30)
@@ -156,6 +159,17 @@ class SettingsWindow:
 
     def _build_api_tab(self) -> None:
         frame, row = self._new_tab("API")
+        self._label(frame, "平台", row)
+        provider_combo = ttk.Combobox(
+            frame,
+            textvariable=self.var_provider,
+            values=list(C.PROVIDER_LABELS),
+            width=30,
+            state="readonly",
+        )
+        provider_combo.grid(row=row, column=1, sticky="ew", pady=int(round(3 * self.scale)))
+        provider_combo.bind("<<ComboboxSelected>>", self._on_provider_selected)
+        row += 1
         self._label(frame, "API Key", row)
         key_row = ttk.Frame(frame)
         key_row.grid(row=row, column=1, sticky="ew", pady=int(round(3 * self.scale)))
@@ -174,13 +188,13 @@ class SettingsWindow:
         hint.grid(row=row, column=1, sticky="w", pady=(0, int(round(6 * self.scale))))
         row += 1
         self._label(frame, "模型", row)
-        model_combo = ttk.Combobox(
+        self.model_combo = ttk.Combobox(
             frame,
             textvariable=self.var_model,
-            values=list(C.MODEL_CHOICES),
+            values=self._model_choices(),
             width=30,
         )
-        model_combo.grid(row=row, column=1, sticky="ew", pady=int(round(3 * self.scale)))
+        self.model_combo.grid(row=row, column=1, sticky="ew", pady=int(round(3 * self.scale)))
         row += 1
         ttk.Label(frame, textvariable=self.var_model_hint, foreground="#66708A").grid(
             row=row, column=1, sticky="w", pady=(0, int(round(6 * self.scale)))
@@ -348,9 +362,23 @@ class SettingsWindow:
             speech = cfg.get("speech") or {}
             behavior = cfg.get("behavior") or {}
             system = cfg.get("system") or {}
-            self.var_api_key.set(str(api_cfg.get("key") or ""))
-            self.var_model.set(str(api_cfg.get("model") or C.DEFAULT_MODEL))
-            self.var_base_url.set(str(api_cfg.get("base_url") or C.DEFAULT_BASE_URL))
+            self._provider_keys = {
+                pid: str((api_cfg.get("keys") or {}).get(pid) or "") for pid in C.PROVIDERS
+            }
+            legacy = str(api_cfg.get("key") or "")
+            provider = str(api_cfg.get("provider") or C.DEFAULT_PROVIDER).lower()
+            if provider not in C.PROVIDERS:
+                provider = C.DEFAULT_PROVIDER
+            if not self._provider_keys.get(provider) and legacy and provider == C.DEFAULT_PROVIDER:
+                self._provider_keys[C.DEFAULT_PROVIDER] = legacy
+            self._current_provider = provider
+            self.var_provider.set(C.PROVIDERS[provider]["label"])
+            self.var_api_key.set(self._provider_keys.get(provider, ""))
+            self.model_combo.configure(values=self._model_choices())
+            preset = C.PROVIDERS[provider]
+            self.var_model_hint.set(f"默认 {preset['default_model']}；也可输入 {preset['label']} 自定义模型名")
+            self.var_model.set(str(api_cfg.get("model") or preset["default_model"]))
+            self.var_base_url.set(str(api_cfg.get("base_url") or preset["base_url"]))
             self.var_timeout.set(int(api_cfg.get("timeout") or 30))
             self.var_max_tokens.set(int(api_cfg.get("max_tokens") or 120))
             self.var_temperature.set(float(api_cfg.get("temperature", 1.3) or 1.3))
@@ -399,9 +427,13 @@ class SettingsWindow:
 
     def _collect_config(self) -> dict[str, Any]:
         cfg = copy.deepcopy(self.original_config)
+        provider = self._current_provider
+        self._provider_keys[provider] = self.var_api_key.get().strip()
         cfg.setdefault("api", {}).update(
             {
-                "key": self.var_api_key.get().strip(),
+                "provider": provider,
+                "keys": dict(self._provider_keys),
+                "key": self._provider_keys.get(C.DEFAULT_PROVIDER, ""),
                 "model": self.var_model.get().strip() or C.DEFAULT_MODEL,
                 "base_url": self.var_base_url.get().strip() or C.DEFAULT_BASE_URL,
                 "timeout": int(self.var_timeout.get()),
@@ -471,6 +503,39 @@ class SettingsWindow:
         except tk.TclError:
             pass
 
+    # ------------------------------------------------------------------
+    # 平台切换（DeepSeek / 智谱 GLM）
+    # ------------------------------------------------------------------
+    def _provider_id(self) -> str:
+        label = self.var_provider.get()
+        for pid, preset in C.PROVIDERS.items():
+            if preset["label"] == label:
+                return pid
+        return C.DEFAULT_PROVIDER
+
+    def _model_choices(self) -> list[str]:
+        preset = C.PROVIDERS.get(self._current_provider) or C.PROVIDERS[C.DEFAULT_PROVIDER]
+        return list(preset.get("models") or C.MODEL_CHOICES)
+
+    def _on_provider_selected(self, _event: Any = None) -> None:
+        if self._loading:
+            return
+        pid = self._provider_id()
+        if pid == self._current_provider:
+            return
+        # 当前 Key 存回原平台，再载入新平台预设
+        self._provider_keys[self._current_provider] = self.var_api_key.get().strip()
+        self._current_provider = pid
+        preset = C.PROVIDERS[pid]
+        self.var_api_key.set(self._provider_keys.get(pid, ""))
+        self.var_base_url.set(preset["base_url"])
+        self.var_model.set(preset["default_model"])
+        try:
+            self.model_combo.configure(values=self._model_choices())
+        except tk.TclError:
+            pass
+        self.var_model_hint.set(f"默认 {preset['default_model']}；也可输入 {preset['label']} 自定义模型名")
+
     def save(self) -> None:
         cfg = self._collect_config()
         try:
@@ -518,7 +583,7 @@ class SettingsWindow:
     # ------------------------------------------------------------------
     def _test_connection(self) -> None:
         cfg = self._collect_config()
-        if not ((cfg.get("api") or {}).get("key") or "").strip():
+        if not api.effective_key(cfg):
             self.var_test_status.set("请先填写 API Key")
             self.var_test_color.set("#B42318")
             return
@@ -619,10 +684,10 @@ class SettingsWindow:
             f"资产目录：{asset_info}\n"
             f"数据目录：{self.app.data_dir}\n"
             f"配置文件：{cfg_path}\n\n"
-            "基于 DeepSeek API 的桌面宠物；美术为 DeepSeek 蓝色大肥鱼非官方二创，仅供个人使用。\n"
+            "基于 DeepSeek / 智谱 GLM 双平台 API 的 AI 桌宠；美术为蓝色大肥鱼非官方二创，仅供个人使用。\n"
             "开源许可：代码 MIT。"
         )
-        messagebox.showinfo("关于蓝鲸桌宠", message, parent=self.win)
+        messagebox.showinfo("关于蓝色大肥鱼", message, parent=self.win)
 
     def _on_close(self) -> None:
         self.save()

@@ -2,7 +2,7 @@ Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
 Upstream-Name: blue-whale-pet
 Upstream-Contact: Blue Whale Pet Team <blue-whale-pet@example.com>
 Source: https://github.com/blue-whale-pet/blue-whale-pet
-Comment: 蓝鲸桌宠为个人非官方同人桌面宠物项目，以 DeepSeek 官方蓝鲸形象为基础做二创；
+Comment: 蓝色大肥鱼为个人非官方同人桌面宠物项目，以 DeepSeek 官方蓝鲸形象为基础做二创；
  官方 logo / 商标版权归 DeepSeek 所有，本项目仅供个人学习与娱乐使用。
  美术来源与处理方式见项目 assets/source/NOTICE.md。
 

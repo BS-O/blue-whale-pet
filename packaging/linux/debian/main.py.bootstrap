@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""蓝鲸桌宠 Linux 安装版引导入口（安装为 /usr/lib/blue-whale-pet/main.py）。
+"""蓝色大肥鱼 Linux 安装版引导入口（安装为 /usr/lib/blue-whale-pet/main.py）。
 
 安装布局（.deb / Arch 包一致）：
     /usr/lib/blue-whale-pet/main.py      <- 本文件（引导壳）

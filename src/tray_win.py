@@ -466,7 +466,7 @@ class WinTray:
         if not menu:
             return
         try:
-            self._append(u, menu, MF_STRING, C.Action.CHAT, "和蓝鲸聊天")
+            self._append(u, menu, MF_STRING, C.Action.CHAT, "和大肥鱼聊天")
             self._append(u, menu, MF_STRING, C.Action.SETTINGS, "设置…")
             self._append(u, menu, MF_SEPARATOR, 0, None)
             self._append(u, menu, MF_STRING, C.Action.TOGGLE_SHOW, "显示 / 隐藏桌宠")
@@ -500,7 +500,7 @@ class WinTray:
                 "开机自启",
             )
             self._append(u, menu, MF_SEPARATOR, 0, None)
-            self._append(u, menu, MF_STRING, C.Action.ABOUT, "关于蓝鲸桌宠")
+            self._append(u, menu, MF_STRING, C.Action.ABOUT, "关于蓝色大肥鱼")
             self._append(u, menu, MF_STRING, C.Action.QUIT, "退出")
             point = POINT()
             u.GetCursorPos(ctypes.byref(point))

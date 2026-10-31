@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""蓝鲸桌宠 Windows 产物验收脚本（pack-win 自用，可复现）。
+"""蓝色大肥鱼 Windows 产物验收脚本（pack-win 自用，可复现）。
 
 用法（在项目根目录）：
     py packaging/windows/verify_windows.py
@@ -41,14 +41,14 @@ import winreg
 import zipfile
 from pathlib import Path
 
-APP_NAME = "蓝鲸桌宠"
+APP_NAME = "蓝色大肥鱼"
 APP_EXE = "BlueWhalePet.exe"
 UNINSTALL_EXE = "uninstall.exe"
 VERSION = "1.0.0"
 PORTABLE_NAME = "BlueWhalePet-Portable-{0}.exe".format(VERSION)
 SETUP_NAME = "BlueWhalePet-Setup-{0}.exe".format(VERSION)
-START_MENU_LNK = "蓝鲸桌宠.lnk"
-DESKTOP_LNK = "蓝鲸桌宠.lnk"
+START_MENU_LNK = "蓝色大肥鱼.lnk"
+DESKTOP_LNK = "蓝色大肥鱼.lnk"
 REG_UNINSTALL = r"Software\Microsoft\Windows\CurrentVersion\Uninstall\BlueWhalePet"
 REG_RUN = r"Software\Microsoft\Windows\CurrentVersion\Run"
 RUN_VALUE = "BlueWhalePet"
@@ -675,7 +675,7 @@ def verify_portable(phase_data):
 # 主流程
 # ---------------------------------------------------------------------------
 def main(argv=None):
-    parser = argparse.ArgumentParser(description="蓝鲸桌宠 Windows 产物验收")
+    parser = argparse.ArgumentParser(description="蓝色大肥鱼 Windows 产物验收")
     parser.add_argument("--skip-custom", action="store_true", help="跳过 /D= 自定义目录安装往返")
     parser.add_argument("--skip-default", action="store_true", help="跳过默认目录安装往返")
     parser.add_argument("--keep-userdata", action="store_true", help="保留 %%APPDATA%%\\BlueWhalePet 测试数据")
@@ -685,7 +685,7 @@ def main(argv=None):
     custom_dir = Path(tempfile.gettempdir()) / "BlueWhalePet-QA-Custom"
     default_dir = Path(os.environ["LOCALAPPDATA"]) / "Programs" / "BlueWhalePet"
     started = time.time()
-    say("蓝鲸桌宠 Windows 产物验收  version=%s" % VERSION)
+    say("蓝色大肥鱼 Windows 产物验收  version=%s" % VERSION)
     say("release dir: %s" % RELEASE)
     say("time: %s" % time.strftime("%Y-%m-%d %H:%M:%S"))
 

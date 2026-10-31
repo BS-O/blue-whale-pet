@@ -38,3 +38,15 @@
 已知限制：
 - 未做代码签名（SmartScreen 会提示未知发布者）；
 - 卸载器自删除依赖 detached 子进程（正常桌面可用）；沙箱环境下装目录会留一个 uninstall.exe 直到重启。
+
+---
+
+## r2 重打（2026-10-31 20:0x，应用更名 + GLM 适配）
+
+- 应用显示名「蓝鲸桌宠」→「**蓝色大肥鱼**」（窗口/托盘/设置/安装器/快捷方式/注册表 DisplayName/.desktop/man 页等 41 处；内部标识符 BlueWhalePet / blue-whale-pet / 注册表键名保持不变，兼容旧配置与升级）。
+- 应用图标更换为用户桌面候选图（1/2/3/5.png，4.png 未提供） processed：`tools/gen_icons.py` 抠图（洪泛+连通域切分贴纸表格）→ 品牌风合成 → 全套 ICO/PNG/hicolor/SVG；候选对比图 `docs/screenshots/icon_candidates.png`，切换候选 `py tools/gen_icons.py --pick N`。来源与流程记录于 `assets/source/NOTICE.md`。
+- 新增智谱 GLM 平台：设置窗口「平台」下拉（DeepSeek/智谱 GLM），Key 分平台保存（`api.keys`，旧 `api.key` 自动迁移为 DeepSeek Key），切换平台自动带出 Base URL 与模型列表（GLM 预设 `https://open.bigmodel.cn/api/paas/v4`，glm-4.6 / glm-4.5-air / glm-4-flash）。
+- 安装器修复：注册表 DisplayName 由拼接式改为纯 APP_NAME（修复重复「蓝色大肥鱼（蓝色大肥鱼）」）。
+- 产物（SHA256 前 16）：便携 `c74887eab5599183`（23,040,532 B）、安装版 `173849dca0d12682`（34,144,814 B）；完整值 SHA256SUMS.txt。
+- 验证：79/79 单测（新增 4 项 provider 测试）；开发态/便携/安装版 `--selftest` OK（app=蓝色大肥鱼，45.6~47.9MB）；安装器静默安装 1048 文件、DisplayName=蓝色大肥鱼、卸载 exit 0。
+- 已知测试怪癖：`Start-Process -Wait` 启动 GUI exe 跑 `--selftest` 会得到退出码 1（托盘线程退出时序），bash 直跑同一 exe 稳定 rc=0——以直跑结果为准。

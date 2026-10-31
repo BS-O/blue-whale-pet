@@ -1,5 +1,5 @@
 # -*- mode: python ; coding: utf-8 -*-
-"""蓝鲸桌宠 Windows 安装版应用（PyInstaller onedir，windowed）。
+"""蓝色大肥鱼 Windows 安装版应用（PyInstaller onedir，windowed）。
 
 构建：
     py -m PyInstaller --noconfirm --clean \

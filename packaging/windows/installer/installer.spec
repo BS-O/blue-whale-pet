@@ -1,5 +1,5 @@
 # -*- mode: python ; coding: utf-8 -*-
-"""蓝鲸桌宠自研安装器（PyInstaller onefile，windowed，纯 Python/tkinter）。
+"""蓝色大肥鱼自研安装器（PyInstaller onefile，windowed，纯 Python/tkinter）。
 
 构建（由 build_all.ps1 调用，必须设置环境变量）：
   PET_PAYLOAD_ZIP  = onedir 应用目录压缩成的 payload.zip（安装载荷，解压到安装目录）

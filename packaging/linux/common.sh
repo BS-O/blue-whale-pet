@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
-# 蓝鲸桌宠 Linux 打包公共函数库。
+# 蓝色大肥鱼 Linux 打包公共函数库。
 # 被 build_linux.sh 与 arch/build_arch_pkg.sh source，不单独执行。
 # shellcheck shell=bash
 
 set -euo pipefail
 
 PKG_NAME="blue-whale-pet"
-APP_NAME_ZH="蓝鲸桌宠"
+APP_NAME_ZH="蓝色大肥鱼"
 APP_VERSION="${BWP_VERSION:-1.0.0}"
 PKG_REL="${BWP_PKGREL:-1}"
 MAINTAINER="${BWP_MAINTAINER:-Blue Whale Pet Team <blue-whale-pet@example.com>}"
@@ -86,7 +86,7 @@ out.write_text(
     '<?xml version="1.0" encoding="UTF-8"?>\n'
     '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"\n'
     '     width="512" height="512" viewBox="0 0 512 512">\n'
-    '  <title>蓝鲸桌宠</title>\n'
+    '  <title>蓝色大肥鱼</title>\n'
     f'  <image width="512" height="512" xlink:href="data:image/png;base64,{b64}"/>\n'
     '</svg>\n',
     encoding="utf-8",

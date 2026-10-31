@@ -1,9 +1,9 @@
-# 🐳 蓝鲸桌宠 · Blue Whale Pet
+# 🐟 蓝色大肥鱼 · AI 桌宠
 
-> 一只住在你桌面上的**蓝色大肥鱼**：DeepSeek 主题 AI 桌宠，会眨眼、会卖萌、会陪你聊天。
-> Windows 便携单 exe / Windows 安装版 / Debian 包 / Arch 包，全部由同一份 Python 源码构建。
+> 一只住在你桌面上的**蓝色大肥鱼**：会眨眼、会卖萌、会陪你聊天。
+> 接入 **DeepSeek / 智谱 GLM** 双平台 API；Windows 便携单 exe / Windows 安装版 / Debian 包 / Arch 包，全部由同一份 Python 源码构建。
 
-![蓝鲸桌宠](docs/screenshots/hero.png)
+![蓝色大肥鱼](docs/screenshots/hero.png)
 
 <p align="center">
   <img src="docs/screenshots/pet.png" width="180" alt="桌宠">
@@ -17,11 +17,11 @@
 | | |
 | --- | --- |
 | 🐟 **蓝色大肥鱼形象** | 38 帧原创二创美术（14 种表情），从 DeepSeek 官方蓝鲸 logo 的轮廓/配色出发程序化重绘：圆胖 Q 版、深色描边、腮红、双叶尾鳍 |
-| 💬 **会说话，言简意赅** | 接 DeepSeek API（`deepseek-flash` 默认），SSE 流式打字机输出，系统提示强制 1~2 句 / ≤60 字，可用颜文字 |
+| 💬 **会说话，言简意赅** | **DeepSeek / 智谱 GLM 双平台**，OpenAI 兼容 + SSE 流式打字机输出，系统提示强制 1~2 句 / ≤60 字，可用颜文字 |
 | 😊 **14 种表情动画** | `idle / blink / happy / laugh / talk / think / sleep / surprise / sad / angry / love / drag / wave / eat`，随机眨眼、呼吸浮动、闲置入睡 |
 | 🖱️ **丰富互动** | 左键戳一戳、双击聊天、**右键拖拽移动**、右键菜单、滚轮缩放（64~320）、托盘菜单 |
 | 🪟 **真·桌面宠物** | 无边框、透明、置顶、不抢任务栏；Windows 色键透明，Linux X11 Shape 裁剪（失败自动回退 alpha） |
-| ⚙️ **设置自由** | 托盘右键 → 设置：API Key/模型/Base URL、大小、不透明度、置顶、鼠标穿透、开机自启、气泡时长、自动睡眠、自定义人设 |
+| ⚙️ **设置自由** | 托盘右键 → 设置：**平台切换（DeepSeek/GLM）**、API Key 分平台保存、模型/Base URL、大小、不透明度、置顶、鼠标穿透、开机自启、气泡时长、自动睡眠、自定义人设 |
 | 🪶 **低内存** | 空载实测 **≈46 MB**（开发态）/ **≈48 MB**（便携 exe 父+子）/ 采样峰值 **57 MB**，目标 ≤60 MB |
 | 📦 **多平台分发** | Windows 便携单 exe（免安装）、Windows 安装版（含卸载器）、Debian `.deb`、Arch `pkg.tar.zst` + `PKGBUILD` |
 | 🔌 **无 Key 也能玩** | 内置本地台词兜底；401/402/429/超时/断网都有中文提示，不崩溃 |
@@ -65,7 +65,7 @@ sudo pacman -U blue-whale-pet-1.0.0-1-any.pkg.tar.zst
 ## 🚀 快速上手
 
 1. **启动**：桌宠出现在桌面，托盘出现蓝鲸图标；
-2. **配置 API Key**：托盘右键 → 设置 → API 页填 Key（[申请地址](https://platform.deepseek.com/api_keys)）→ 测试连接 → 保存；
+2. **配置 API Key**：托盘右键 → 设置 → API 页选平台（DeepSeek / 智谱 GLM）→ 填对应 Key（DeepSeek [申请](https://platform.deepseek.com/api_keys)；GLM [申请](https://open.bigmodel.cn/usercenter/apikeys)）→ 测试连接 → 保存；两个平台的 Key 各存一份，随时切换；
 3. **互动**：
 
 | 操作 | 效果 |
@@ -92,7 +92,7 @@ sudo pacman -U blue-whale-pet-1.0.0-1-any.pkg.tar.zst
 - **透明窗口**：Windows 用 `-transparentcolor` 色键 + Pillow 预合成（边缘深色描边避免毛边）；Linux 用 ctypes 调用 `libX11/libXext` 的 XShape 裁剪，环境不支持时回退 `-alpha`。
 - **DPI 友好**：启动即声明 Per-Monitor DPI 感知，尺寸/坐标按逻辑像素存储，125% 缩放下同样清晰、大小正确。
 - **表情状态机**：完全由 `assets/mascot/manifest.json` 驱动（14 状态 / 38 帧 / durations / loop / 锚点），替换美术无需改代码。
-- **API 调用**：只用标准库 `urllib`，OpenAI 兼容 `POST /chat/completions`，SSE 逐行解析 `delta.content` 与 `[DONE]`，请求带 `thinking:{"type":"disabled"}` 与 `max_tokens`，上下文保留最近 8 轮。
+- **API 调用**：只用标准库 `urllib`，OpenAI 兼容 `POST /chat/completions`（DeepSeek / GLM 双平台预设：切平台自动带出 Base URL 与模型列表），SSE 逐行解析 `delta.content` 与 `[DONE]`，带 `thinking:{"type":"disabled"}` 与 `max_tokens`，上下文保留最近 8 轮；Key 分平台保存。
 - **托盘**：Windows 用 ctypes 直接 `Shell_NotifyIconW` + `TrackPopupMenu`（独立消息循环线程，处理 `TaskbarCreated` 重建）；Linux 可选 `pystray`，不可用时用宠物右键菜单兜底。
 - **工程化**：单实例（Mutex / 锁文件 + 唤醒通道）、配置原子写与损坏备份、滚动日志、开机自启、`--selftest` 15 项自检、75 个单元测试。
 
@@ -143,7 +143,7 @@ bash packaging/linux/build_linux.sh                 # Debian + Arch 包（WSL De
 
 **托盘图标找不到？** Windows 11 收进 `^` 溢出区；Linux GNOME 需 AppIndicator 扩展，无托盘时右键宠物可打开菜单。
 
-**聊天报 401 / 402 / 429？** 401 检查 Key 与余额；402 需充值；429 限流稍后再试（桌宠会自动用本地台词兜底）。
+**聊天报 401 / 402 / 429？** 401 检查对应平台的 Key；402 需充值（DeepSeek）/ GLM 检查资源包；429 限流稍后再试（自动本地台词兜底）。GLM 在 [bigmodel.cn](https://open.bigmodel.cn) 有免费资源包，`glm-4-flash` 有免费额度。
 
 **Linux 上不透明 / 不能置顶？** 需要 X11 或 XWayland；纯 Wayland 下部分合成器限制形状与置顶，建议登录 Xorg 会话。
 

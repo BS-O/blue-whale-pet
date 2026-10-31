@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""蓝鲸桌宠（BlueWhalePet）Windows 自研安装器。
+"""蓝色大肥鱼（BlueWhalePet）Windows 自研安装器。
 
 设计约束（见 SPEC §7.1）：
   * 纯 Python + tkinter 实现，零外部打包工具依赖（无 Inno Setup / NSIS / 7z）；
@@ -39,7 +39,7 @@ from pathlib import Path
 # ---------------------------------------------------------------------------
 # 常量
 # ---------------------------------------------------------------------------
-APP_NAME = "蓝鲸桌宠"
+APP_NAME = "蓝色大肥鱼"
 APP_NAME_EN = "BlueWhalePet"
 APP_VERSION = "1.0.0"
 APP_EXE = "BlueWhalePet.exe"
@@ -47,8 +47,8 @@ UNINSTALL_EXE = "uninstall.exe"
 PUBLISHER = "BlueWhalePet Project"
 DISPLAY_ICON_NAME = "BlueWhalePet.ico"
 
-START_MENU_LNK_NAME = "蓝鲸桌宠.lnk"
-DESKTOP_LNK_NAME = "蓝鲸桌宠.lnk"
+START_MENU_LNK_NAME = "蓝色大肥鱼.lnk"
+DESKTOP_LNK_NAME = "蓝色大肥鱼.lnk"
 
 REG_UNINSTALL = r"Software\Microsoft\Windows\CurrentVersion\Uninstall\BlueWhalePet"
 REG_RUN = r"Software\Microsoft\Windows\CurrentVersion\Run"
@@ -64,7 +64,7 @@ FOLDERID_PROGRAMS = "A77F5D77-2E2B-44C3-A6A2-ABA601054A51"
 FOLDERID_LOCALAPPDATA = "F1B32785-6FBA-4FCF-9D55-7B8E7F157091"
 
 LICENSE_TEXT = """\
-蓝鲸桌宠（BlueWhalePet） 1.0.0  软件许可协议
+蓝色大肥鱼（BlueWhalePet） 1.0.0  软件许可协议
 
 1. 代码许可
    本项目源代码采用 MIT 许可证发布。你可以自由使用、修改、分发本软件，
@@ -89,7 +89,7 @@ LICENSE_TEXT = """\
 """
 
 WELCOME_TEXT = (
-    "欢迎安装 蓝鲸桌宠 1.0.0（蓝色大肥鱼 / DeepSeek 桌宠）。\n\n"
+    "欢迎安装 蓝色大肥鱼 1.0.0（蓝色大肥鱼 / DeepSeek 桌宠）。\n\n"
     "安装程序将把程序文件复制到你的用户目录，并创建开始菜单快捷方式。\n"
     "整个安装过程无需管理员权限，也不会修改系统级设置。\n\n"
     "点击“下一步”继续。"
@@ -283,7 +283,7 @@ def write_uninstall_entry(install_dir: Path) -> None:
     size_kb = max(1, int(total / 1024))
 
     values = [
-        ("DisplayName", winreg.REG_SZ, "%s（蓝色大肥鱼）" % APP_NAME),
+        ("DisplayName", winreg.REG_SZ, APP_NAME),
         ("DisplayVersion", winreg.REG_SZ, APP_VERSION),
         ("Publisher", winreg.REG_SZ, PUBLISHER),
         ("DisplayIcon", winreg.REG_SZ, str(icon_path) if icon_path.is_file() else str(exe_path)),
@@ -749,12 +749,12 @@ def perform_install(install_dir: Path, with_desktop: bool, progress_cb) -> None:
 
     if not _dir_is_ours_or_empty(install_dir):
         raise RuntimeError(
-            "目标目录已存在且不是蓝鲸桌宠的安装目录，请换一个空目录：\n%s" % install_dir
+            "目标目录已存在且不是蓝色大肥鱼的安装目录，请换一个空目录：\n%s" % install_dir
         )
 
     install_dir.mkdir(parents=True, exist_ok=True)
 
-    progress_cb(6, "正在结束正在运行的蓝鲸桌宠…")
+    progress_cb(6, "正在结束正在运行的蓝色大肥鱼…")
     kill_running_app()
 
     # 覆盖安装时先清理旧文件（保留 uninstall.exe 由后续复制覆盖）
@@ -866,7 +866,7 @@ def _mark_leftover_for_reboot(install_dir: Path) -> None:
 
 def perform_uninstall(install_dir: Path, progress_cb, remove_user_data: bool = False) -> None:
     log("开始卸载: %s" % install_dir)
-    progress_cb(5, "正在结束蓝鲸桌宠进程…")
+    progress_cb(5, "正在结束蓝色大肥鱼进程…")
     kill_running_app()
 
     progress_cb(25, "正在删除快捷方式…")
@@ -958,7 +958,7 @@ class WizardApp:
         self._queue = queue.Queue()
 
         self.root = tk.Tk()
-        self.root.title("蓝鲸桌宠 安装程序")
+        self.root.title("蓝色大肥鱼 安装程序")
         self.root.resizable(False, False)
         self.root.protocol("WM_DELETE_WINDOW", self.cancel)
         ico = resource_path("setup.ico")
@@ -1064,7 +1064,7 @@ class WizardApp:
         tk = self.tk
         # 0 欢迎
         page = self._page_frame()
-        self._title(page, "欢迎使用 蓝鲸桌宠 安装程序")
+        self._title(page, "欢迎使用 蓝色大肥鱼 安装程序")
         self._body(page, WELCOME_TEXT)
 
         # 1 许可
@@ -1102,7 +1102,7 @@ class WizardApp:
         self._title(page, "选择安装位置")
         self._body(
             page,
-            "蓝鲸桌宠将安装到下面的目录（默认按当前用户安装，无需管理员权限）：",
+            "蓝色大肥鱼将安装到下面的目录（默认按当前用户安装，无需管理员权限）：",
         )
         self.dir_var = tk.StringVar(value=str(default_install_dir()))
         entry_row = tk.Frame(page, bg="#FFFFFF")
@@ -1114,7 +1114,7 @@ class WizardApp:
         )
         self.dir_hint = tk.Label(
             page,
-            text="目录必须为空，或为已安装的蓝鲸桌宠旧版本（将被覆盖升级）。",
+            text="目录必须为空，或为已安装的蓝色大肥鱼旧版本（将被覆盖升级）。",
             bg="#FFFFFF",
             fg="#6B7686",
             font=("Microsoft YaHei UI", 8),
@@ -1140,7 +1140,7 @@ class WizardApp:
         ).pack(anchor="w")
         self._body(
             page,
-            "安装完成后，可以从开始菜单「蓝鲸桌宠」启动程序。\n"
+            "安装完成后，可以从开始菜单「蓝色大肥鱼」启动程序。\n"
             "卸载程序会保留你的用户配置（%APPDATA%\\BlueWhalePet）。",
             pady=(16, 0),
         )
@@ -1181,7 +1181,7 @@ class WizardApp:
         self.finish_label.pack(fill="x")
         self.run_var = tk.BooleanVar(value=True)
         self.run_check = self.ttk.Checkbutton(
-            page, text="立即运行 蓝鲸桌宠", variable=self.run_var
+            page, text="立即运行 蓝色大肥鱼", variable=self.run_var
         )
         self.run_check.pack(anchor="w", pady=(18, 0))
 
@@ -1244,7 +1244,7 @@ class WizardApp:
             if not _dir_is_ours_or_empty(target):
                 self.messagebox.showwarning(
                     "目录不可用",
-                    "该目录已存在且不是蓝鲸桌宠的安装目录，请选择其他目录：\n%s" % target,
+                    "该目录已存在且不是蓝色大肥鱼的安装目录，请选择其他目录：\n%s" % target,
                 )
                 return
             try:
@@ -1298,8 +1298,8 @@ class WizardApp:
                     self._show_page(self.PAGE_FINISH)
                     self.finish_label.configure(
                         text=(
-                            "蓝鲸桌宠 1.0.0 已成功安装到：\n%s\n\n"
-                            "你可以从开始菜单「蓝鲸桌宠」启动，或使用桌面快捷方式（如果已创建）。\n"
+                            "蓝色大肥鱼 1.0.0 已成功安装到：\n%s\n\n"
+                            "你可以从开始菜单「蓝色大肥鱼」启动，或使用桌面快捷方式（如果已创建）。\n"
                             "卸载程序：%s\n\n"
                             "祝你玩得开心！🐳" % (install_dir, install_dir / UNINSTALL_EXE)
                         )
@@ -1360,7 +1360,7 @@ class UninstallApp:
         self._images = []
 
         self.root = tk.Tk()
-        self.root.title("卸载 蓝鲸桌宠")
+        self.root.title("卸载 蓝色大肥鱼")
         self.root.resizable(False, False)
         self.root.configure(bg="#FFFFFF")
         ico = resource_path("setup.ico")
@@ -1385,7 +1385,7 @@ class UninstallApp:
 
         tk.Label(
             self.root,
-            text="卸载 蓝鲸桌宠",
+            text="卸载 蓝色大肥鱼",
             bg="#FFFFFF",
             fg="#0B1330",
             font=("Microsoft YaHei UI", 13, "bold"),
@@ -1394,7 +1394,7 @@ class UninstallApp:
         tk.Label(
             self.root,
             text=(
-                "将从下面的目录卸载蓝鲸桌宠：\n%s\n\n"
+                "将从下面的目录卸载蓝色大肥鱼：\n%s\n\n"
                 "卸载会删除程序文件、开始菜单/桌面快捷方式、卸载注册项和开机自启项；\n"
                 "你的用户配置（%%APPDATA%%\\BlueWhalePet）会被保留。\n\n"
                 "确定要卸载吗？" % install_dir
@@ -1458,7 +1458,7 @@ class UninstallApp:
                 elif item[0] == "done":
                     self._done = True
                     self.progress_var.set(100)
-                    self.status.configure(text="卸载完成。感谢使用 蓝鲸桌宠！")
+                    self.status.configure(text="卸载完成。感谢使用 蓝色大肥鱼！")
                     self.btn.configure(text="关闭", state="normal", command=self.finish)
                     self.close_btn.configure(state="disabled", command=self.finish)
                     self.result_code = 0

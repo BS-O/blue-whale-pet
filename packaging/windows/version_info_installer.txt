@@ -17,12 +17,12 @@ VSVersionInfo(
           '080404b0',
           [
             StringStruct('CompanyName', 'BlueWhalePet Project'),
-            StringStruct('FileDescription', '\u84dd\u9cb8\u684c\u5ba0 \u5b89\u88c5\u7a0b\u5e8f'),
+            StringStruct('FileDescription', '\u84dd\u8272\u5927\u80a5\u9c7c \u5b89\u88c5\u7a0b\u5e8f'),
             StringStruct('FileVersion', '1.0.0'),
             StringStruct('InternalName', 'BlueWhalePet-Setup'),
             StringStruct('LegalCopyright', 'MIT License; DeepSeek whale logo (c) DeepSeek, non-official fan project'),
             StringStruct('OriginalFilename', 'BlueWhalePet-Setup-1.0.0.exe'),
-            StringStruct('ProductName', '\u84dd\u9cb8\u684c\u5ba0'),
+            StringStruct('ProductName', '\u84dd\u8272\u5927\u80a5\u9c7c'),
             StringStruct('ProductVersion', '1.0.0')
           ]
         )

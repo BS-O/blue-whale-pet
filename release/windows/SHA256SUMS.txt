@@ -1,2 +1,2 @@
-b095c6a12d74efe3857ba1f22c7a1a9bd8f21efc5f6334227f3063508341fc5c  BlueWhalePet-Portable-1.0.0.exe
-defbb87e8695a7942dfd76efc889a645e26b80bf2cc43d489c2b062f2069c9ee  BlueWhalePet-Setup-1.0.0.exe
+c74887eab5599183d99a81bfbb5f4000d406f8acb4b5004b7b2e0f79ba0745f0  BlueWhalePet-Portable-1.0.0.exe
+173849dca0d12682047c72a1eef69c47c0367e13df73afc7b3e7e8c096e4bed3  BlueWhalePet-Setup-1.0.0.exe

@@ -1,8 +1,8 @@
-"""蓝鲸桌宠入口（SPEC §6）。
+"""蓝色大肥鱼入口（SPEC §6）。
 
 用法：
   py src/main.py                 # 正常运行
-  py src/main.py --version       # 蓝鲸桌宠 1.0.0
+  py src/main.py --version       # 蓝色大肥鱼 1.0.0
   py src/main.py --selftest      # 自动自检（约 10s）
   py src/main.py --showcase 14   # 固定位置展示全部表情（截图用）
   py src/main.py --config path   # 指定配置
@@ -24,7 +24,7 @@ if str(_SRC_DIR) not in sys.path:
     sys.path.insert(0, str(_SRC_DIR))
 
 APP_VERSION = "1.0.0"
-APP_NAME = "蓝鲸桌宠"
+APP_NAME = "蓝色大肥鱼"
 
 
 def _write_dump_config(payload: dict) -> None:

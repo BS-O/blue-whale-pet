@@ -1,5 +1,5 @@
 #!/bin/sh
-# 蓝鲸桌宠 .deb 卸载后脚本：
+# 蓝色大肥鱼 .deb 卸载后脚本：
 #  - 清理各用户的开机自启项 ~/.config/autostart/blue-whale-pet.desktop
 #  - 保留用户配置目录 ~/.config/blue-whale-pet（如彻底删除请用户手动清理）
 #  - 刷新桌面数据库 / 图标缓存
@@ -26,7 +26,7 @@ case "$1" in
     if command -v gtk-update-icon-cache >/dev/null 2>&1; then
       gtk-update-icon-cache -q -t -f /usr/share/icons/hicolor >/dev/null 2>&1 || true
     fi
-    echo "已移除 蓝鲸桌宠。"
+    echo "已移除 蓝色大肥鱼。"
     echo "用户配置已保留在 ~/.config/blue-whale-pet/（如不再需要可手动删除）。"
     ;;
   purge)

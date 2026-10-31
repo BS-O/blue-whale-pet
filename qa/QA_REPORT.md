@@ -78,3 +78,13 @@ deb/Arch 为 2026-10-31 postrm 修复后重打（修复过程见 §7）。全量
 ## 8. 结论
 
 四大交付物（Windows 便携 exe / Windows 安装版 / Debian .deb / Arch 包）全部通过端到端验证；内存、交互、聊天流式、多表情、托盘设置、右键拖拽、可调大小均符合 SPEC 验收标准。遗留事项仅 §6 残留说明（Windows 自删除限制）与 Linux 托盘环境依赖（文档已注明），不阻塞交付。
+
+---
+
+## 9. r2 轮增量 QA（2026-10-31 19:2x–20:1x，更名 + GLM）
+
+- **改名回归**：41 处「蓝鲸桌宠」→「蓝色大肥鱼」（display 层），标识符未动；`grep` 复查 src/packaging/docs 无残留；79/79 单测（含 4 项新增 provider 用例）；开发/便携/安装版/deb 四端 `--selftest` OK 且 `app=蓝色大肥鱼`。
+- **图标更换**：桌面候选 4 张（1/2/3/5.png；4.png 缺失）→ `tools/gen_icons.py` 洪泛抠图 + 连通域切分（1.png 为贴纸表格，322 域取最大单体）→ 品牌风合成 → app.ico(16–256)/tray.ico/setup.ico/app.png/hicolor 8 档/SVG；ICO 尺寸用 Pillow `info["sizes"]` 校验齐全；选型依据 ASCII 轮廓 + 主色（候选 1 蓝鱼胜出，5 备选）。
+- **GLM 适配**：config 新增 provider/keys（旧 key 自动迁移）；api.py 按平台取 Key、thinking 按预设注入；设置窗「平台」下拉切换自动带出 Key/模型/Base URL；mock 语义经单元测试覆盖 payload/headers（glm-4.6 + Bearer）。
+- **安装器**：DisplayName 修复为纯 APP_NAME；静默安装 1048 文件、HKCU DisplayName=蓝色大肥鱼、卸载 exit=0。
+- **遗留观察**：Start-Process 方式启动 GUI exe 的 selftest 退出码为 1（bash 直跑为 0，产品行为正常）；安装目录卸载后仍留运行中的 uninstall.exe（同 §6）。

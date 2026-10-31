@@ -46,17 +46,34 @@ def completions_url(base_url: str) -> str:
     return base + CHAT_COMPLETIONS_PATH
 
 
-def build_payload(cfg: dict[str, Any], messages: list[dict[str, str]], stream: bool = True) -> dict[str, Any]:
-    """构造 OpenAI 兼容请求体（含 thinking disabled）。"""
+def effective_provider(cfg: dict[str, Any]) -> str:
+    """当前生效的 API 平台 id（deepseek / glm），未知回退默认。"""
     api = cfg.get("api", {}) if isinstance(cfg, dict) else {}
+    provider = str(api.get("provider") or C.DEFAULT_PROVIDER).lower()
+    return provider if provider in C.PROVIDERS else C.DEFAULT_PROVIDER
+
+
+def effective_key(cfg: dict[str, Any]) -> str:
+    """按平台取 Key：优先 api.keys[provider]，兼容旧 api.key 字段。"""
+    api = cfg.get("api", {}) if isinstance(cfg, dict) else {}
+    provider = effective_provider(cfg)
+    keys = api.get("keys") if isinstance(api.get("keys"), dict) else {}
+    return str(keys.get(provider) or api.get("key") or "").strip()
+
+
+def build_payload(cfg: dict[str, Any], messages: list[dict[str, str]], stream: bool = True) -> dict[str, Any]:
+    """构造 OpenAI 兼容请求体（thinking 按平台预设注入）。"""
+    api = cfg.get("api", {}) if isinstance(cfg, dict) else {}
+    preset = C.PROVIDERS.get(effective_provider(cfg)) or C.PROVIDERS[C.DEFAULT_PROVIDER]
     payload: dict[str, Any] = {
-        "model": api.get("model") or C.DEFAULT_MODEL,
+        "model": api.get("model") or preset["default_model"],
         "messages": messages,
         "stream": bool(stream),
         "max_tokens": int(api.get("max_tokens") or 120),
         "temperature": float(api.get("temperature", 1.3)),
-        "thinking": {"type": "disabled"},
     }
+    if preset.get("apply_thinking"):
+        payload["thinking"] = {"type": "disabled"}
     return payload
 
 
@@ -67,7 +84,7 @@ def build_headers(cfg: dict[str, Any]) -> dict[str, str]:
         "Accept": "text/event-stream" if True else "application/json",
         "User-Agent": f"{C.APP_ID}/{C.APP_VERSION}",
     }
-    key = (api.get("key") or "").strip()
+    key = effective_key(cfg)
     if key:
         headers["Authorization"] = f"Bearer {key}"
     return headers
@@ -233,8 +250,7 @@ class DeepSeekClient:
 
     @staticmethod
     def has_key(cfg: dict[str, Any]) -> bool:
-        key = ((cfg.get("api") or {}).get("key") or "").strip()
-        return bool(key)
+        return bool(effective_key(cfg))
 
     def stream_chat(
         self,

@@ -146,7 +146,7 @@ write_metadata() {
 pkgname = $PKG_NAME
 pkgbase = $PKG_NAME
 pkgver = $VERSION-$REL
-pkgdesc = $APP_NAME_ZH - DeepSeek 主题桌面宠物（蓝色大肥鱼）
+pkgdesc = $APP_NAME_ZH - AI 桌宠（DeepSeek / GLM）
 url = https://github.com/blue-whale-pet/blue-whale-pet
 builddate = $builddate
 packager = $MAINTAINER

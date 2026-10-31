@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # =============================================================================
-# 蓝鲸桌宠 Linux 打包脚本（Debian 13 trixie / Ubuntu 测试；WSL2 内直接运行）
+# 蓝色大肥鱼 Linux 打包脚本（Debian 13 trixie / Ubuntu 测试；WSL2 内直接运行）
 # =============================================================================
 # 产物（默认输出到 <项目>/release/linux/）：
 #   blue-whale-pet_1.0.0_all.deb                  Debian/Ubuntu 安装包
@@ -29,7 +29,7 @@ SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)
 
 usage() {
   cat <<'EOF'
-蓝鲸桌宠 Linux 打包脚本
+蓝色大肥鱼 Linux 打包脚本
 
 用法: bash packaging/linux/build_linux.sh [选项]
 

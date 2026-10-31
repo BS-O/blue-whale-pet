@@ -43,3 +43,12 @@
 2. 单文件版由 Debian 13 的 glibc 构建，CentOS 7 等老系统不兼容；推荐发行版用户使用 deb / PKGBUILD 方式。
 3. Linux 托盘依赖 XEmbed/AppIndicator 环境：GNOME 需 AppIndicator 扩展，无托盘时应用自动退化为宠物右键菜单（功能等价）。
 4. WSL 沙箱中 `sudo` 有密码提示，验证一律以 `-u root` 运行；真实发行版上按 README 用 `sudo apt/pacman` 即可。
+
+---
+
+## r2 重打（2026-10-31，应用更名 + GLM 适配）
+
+- 显示名更改为「蓝色大肥鱼」（.desktop / control 描述 / man 页 / postinst&postrm 提示 / PKGBUILD pkgdesc；包名仍为 blue-whale-pet）。
+- 新增 GLM 平台适配随源码打包（设置窗口平台切换，见 Windows r2 说明）。
+- 产物：deb `7db898626373462a`（1,775,x B）、arch `18aae495fe47dcb4`；完整值 SHA256SUMS.txt。
+- 验证：`dpkg -i` → `--version` 输出「蓝色大肥鱼 1.0.0」→ `xvfb-run --selftest` 15/15（app=蓝色大肥鱼，42.07MB）→ WSLg 真窗口 → `dpkg -r` 无残留。`DEB VERIFY OK`。

@@ -1,5 +1,5 @@
 # Maintainer: Blue Whale Pet Team <blue-whale-pet@example.com>
-# 蓝鲸桌宠（Blue Whale Pet / 蓝色大肥鱼）Arch Linux PKGBUILD
+# 蓝色大肥鱼（Blue Whale Pet / 蓝色大肥鱼）Arch Linux PKGBUILD
 #
 # 说明：
 #   * 源码 tarball 与 PKGBUILD 由 packaging/linux/build_linux.sh 生成并填入
@@ -10,7 +10,7 @@
 pkgname=blue-whale-pet
 pkgver=1.0.0
 pkgrel=1
-pkgdesc="蓝鲸桌宠 - DeepSeek 主题桌面宠物（蓝色大肥鱼）"
+pkgdesc="蓝色大肥鱼 - AI 桌宠（DeepSeek / GLM）"
 arch=('any')
 url="https://github.com/blue-whale-pet/blue-whale-pet"
 license=('MIT')
@@ -19,7 +19,7 @@ optdepends=('python-pystray: 可选系统托盘支持（无则使用宠物右键
 makedepends=('python')
 install="$pkgname.install"
 source=("$pkgname-$pkgver.tar.gz")
-sha256sums=('f19f6660706d05b8a42de8872fa2132b1a8eb4945f1244b1f7ca4895ea30c45f')
+sha256sums=('6d68154e5e9dc5d96229171f7fed149c7af1ad655c082e89da29b11a0b2d9c75')
 
 package() {
   cd "$srcdir/$pkgname-$pkgver"

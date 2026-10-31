@@ -37,3 +37,16 @@
 - 表情/动画（14 state × 38 帧）、图标（app/tray/setup/hicolor/svg）、安装器 banner/side 全部由代码绘制，
   无外部图片素材进入成品目录。
 - Simple Icons 部分遵循 CC0-1.0；其余素材版权归原作者/DeepSeek 所有，仅作参考，不随本项目单独授权。
+
+## 2026-10-31 图标更新（应用更名「蓝色大肥鱼」）
+
+- 用户在桌面提供候选图 `1.png / 2.png / 3.png / 5.png`（4.png 未提供，共 4 张有效），
+  作为新版应用图标（app.ico / tray.ico / setup.ico / app.png / hicolor / svg）的素材来源。
+- 处理流程（`tools/gen_icons.py`，可复现）：
+  1. 四角中值估计背景色 + 边界洪泛抠图（背景均匀度阈值 0.55，容差自适应）；
+  2. 主体裁边、6% 透明衬边、0.8px 羽化；贴纸表格图（1.png，322 个连通域）自动切出最大单体；
+  3. 主体主色判定（HSV）→ 偏蓝主体用浅底 `#F7F9FF` + 品牌蓝描边环，否则品牌蓝底；
+  4. 多尺寸重采样（ICO 256~16 / hicolor 16~512 / 512 app.png / SVG 内嵌 base64）。
+- 自动选型：候选 1（贴纸表格中的单只蓝鱼，score 5.0）> 候选 5（单只主体，score 5.0）> 2/3（背景复杂仅圆角裁切）。
+  如需改用其他候选：`py tools/gen_icons.py --pick 5`。对比图：`docs/screenshots/icon_candidates.png`。
+- 候选图版权归原作者所有，仅本机使用，不随仓库外的分发再授权。

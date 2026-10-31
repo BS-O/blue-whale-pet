@@ -1,5 +1,5 @@
 # Maintainer: @MAINTAINER@
-# 蓝鲸桌宠（Blue Whale Pet / 蓝色大肥鱼）Arch Linux PKGBUILD
+# 蓝色大肥鱼（Blue Whale Pet / 蓝色大肥鱼）Arch Linux PKGBUILD
 #
 # 说明：
 #   * 源码 tarball 与 PKGBUILD 由 packaging/linux/build_linux.sh 生成并填入
@@ -10,7 +10,7 @@
 pkgname=blue-whale-pet
 pkgver=@PKGVER@
 pkgrel=@PKGREL@
-pkgdesc="蓝鲸桌宠 - DeepSeek 主题桌面宠物（蓝色大肥鱼）"
+pkgdesc="蓝色大肥鱼 - AI 桌宠（DeepSeek / GLM）"
 arch=('any')
 url="https://github.com/blue-whale-pet/blue-whale-pet"
 license=('MIT')

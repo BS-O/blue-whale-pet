@@ -59,13 +59,14 @@ class CliTest(unittest.TestCase):
 
     def test_constants_contract(self) -> None:
         self.assertEqual(C.APP_VERSION, "1.0.0")
-        self.assertEqual(C.APP_NAME, "蓝鲸桌宠")
+        self.assertEqual(C.APP_NAME, "蓝色大肥鱼")
         self.assertEqual(C.APP_ID, "BlueWhalePet")
         self.assertEqual(C.APP_PACKAGE, "blue-whale-pet")
         self.assertEqual(C.MIN_SIZE, 64)
         self.assertEqual(C.MAX_SIZE, 320)
         self.assertEqual(C.DEFAULT_MODEL, "deepseek-flash")
         self.assertIn("deepseek-v4-pro", C.MODEL_CHOICES)
+        self.assertIn("glm", C.PROVIDERS)
         self.assertEqual(len(C.REQUIRED_STATES), 14)
         self.assertEqual(len(C.SIZE_PRESETS), 3)
 

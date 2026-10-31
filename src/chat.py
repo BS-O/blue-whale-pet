@@ -62,7 +62,7 @@ class ChatWindow:
         width = int(round(430 * self.scale))
         height = int(round(380 * self.scale))
         self.win = tk.Toplevel(root, class_=C.WM_CLASS)
-        self.win.title("和蓝鲸聊天 - 蓝鲸桌宠")
+        self.win.title("和大肥鱼聊天 - 蓝色大肥鱼")
         try:
             self.win.attributes("-topmost", True)
         except tk.TclError:
@@ -75,7 +75,7 @@ class ChatWindow:
         container.pack(fill="both", expand=True)
         header = ttk.Label(
             container,
-            text="🐳 和蓝鲸聊天",
+            text="🐳 和大肥鱼聊天",
             font=(family, 12, "bold"),
         )
         header.pack(anchor="w", pady=(0, int(round(4 * self.scale))))
@@ -140,7 +140,7 @@ class ChatWindow:
         self.win.lift()
         self.entry.focus_set()
         try:
-            platform_win.set_window_title(self.win, "和蓝鲸聊天 - 蓝鲸桌宠")
+            platform_win.set_window_title(self.win, "和大肥鱼聊天 - 蓝色大肥鱼")
         except Exception:  # noqa: BLE001
             pass
         self.append_system("想聊点什么？戳我、问我、或者让我夸夸你都可以～")

@@ -9,7 +9,7 @@ post_install() {
     gtk-update-icon-cache -q -t -f /usr/share/icons/hicolor >/dev/null 2>&1 || true
   fi
   chmod 0755 /usr/bin/blue-whale-pet >/dev/null 2>&1 || true
-  echo "蓝鲸桌宠已安装：可从应用菜单启动，或运行命令 blue-whale-pet"
+  echo "蓝色大肥鱼已安装：可从应用菜单启动，或运行命令 blue-whale-pet"
   echo "首次使用请在设置窗口填写 DeepSeek API Key（也可不填，使用内置短句）。"
 }
 
@@ -36,5 +36,5 @@ post_remove() {
   if command -v gtk-update-icon-cache >/dev/null 2>&1; then
     gtk-update-icon-cache -q -t -f /usr/share/icons/hicolor >/dev/null 2>&1 || true
   fi
-  echo "已移除 蓝鲸桌宠。用户配置保留在 ~/.config/blue-whale-pet/（不需要可手动删除）。"
+  echo "已移除 蓝色大肥鱼。用户配置保留在 ~/.config/blue-whale-pet/（不需要可手动删除）。"
 }

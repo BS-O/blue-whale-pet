@@ -1,11 +1,11 @@
 [Desktop Entry]
 Type=Application
 Version=1.0
-Name=蓝鲸桌宠
+Name=蓝色大肥鱼
 Name[en]=Blue Whale Pet
 GenericName=桌面宠物
 GenericName[en]=Desktop Pet
-Comment=会说话的 DeepSeek 主题桌面宠物（蓝色大肥鱼）
+Comment=会说话的 AI 桌宠（DeepSeek / GLM）
 Comment[en]=A chatty DeepSeek-themed desktop pet (Blue Whale / 蓝色大肥鱼)
 Exec=blue-whale-pet
 TryExec=blue-whale-pet

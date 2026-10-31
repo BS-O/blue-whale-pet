@@ -84,7 +84,7 @@ class TrayManager:
                 return _inner
 
             menu = pystray.Menu(
-                pystray.MenuItem("和蓝鲸聊天", lambda *_: self._emit(C.Action.CHAT), default=True),
+                pystray.MenuItem("和大肥鱼聊天", lambda *_: self._emit(C.Action.CHAT), default=True),
                 pystray.MenuItem("设置…", lambda *_: self._emit(C.Action.SETTINGS)),
                 pystray.Menu.SEPARATOR,
                 pystray.MenuItem("显示 / 隐藏桌宠", lambda *_: self._emit(C.Action.TOGGLE_SHOW)),
@@ -95,7 +95,7 @@ class TrayManager:
                     "开机自启", lambda *_: self._emit(C.Action.TOGGLE_AUTOSTART), checked=_checked("autostart")
                 ),
                 pystray.Menu.SEPARATOR,
-                pystray.MenuItem("关于蓝鲸桌宠", lambda *_: self._emit(C.Action.ABOUT)),
+                pystray.MenuItem("关于蓝色大肥鱼", lambda *_: self._emit(C.Action.ABOUT)),
                 pystray.MenuItem("退出", lambda *_: self._emit(C.Action.QUIT)),
             )
             icon = pystray.Icon(C.APP_PACKAGE, image, C.TRAY_TOOLTIP, menu)

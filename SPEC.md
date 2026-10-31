@@ -1,4 +1,4 @@
-# 蓝鲸桌宠（Blue Whale Pet / 蓝色大肥鱼）工程契约 v1
+# 蓝色大肥鱼（Blue Whale Pet）工程契约 v1
 
 > 本文件是 Lead / pet-core / asset-fish / pack-win / pack-linux 共同遵守的接口契约。
 > 修改契约前必须先通知 Lead；本文件由 Lead 维护。
@@ -14,7 +14,7 @@
   托盘右键 → 设置菜单（设置窗口、显示/隐藏、大小、开机自启、关于、退出）。
 - 打包：Windows 便携单 exe；Windows 安装版（Exe 安装器 + 卸载）；Debian `.deb`；Arch `PKGBUILD` + 预构建 `pkg.tar.zst`。
 
-产品名：**蓝鲸桌宠**（副标题：蓝色大肥鱼 / DeepSeek 桌宠）
+产品名：**蓝色大肥鱼**（副标题：AI 桌宠 · DeepSeek / GLM）
 英文可执行名：`BlueWhalePet`；包名：`blue-whale-pet`；版本：`1.0.0`。
 
 ## 2. 目录结构与写入范围（严格，禁止越界写）
@@ -108,7 +108,7 @@ blue-whale-pet/
 
 `src/main.py`：
 - 无参数：正常运行。
-- `--version`：打印 `蓝鲸桌宠 1.0.0` 后退出。
+- `--version`：打印 `蓝色大肥鱼 1.0.0` 后退出。
 - `--config PATH`：使用指定配置文件。
 - `--selftest`：自动自检（加载 manifest/全部表情、创建宠物窗口、模拟 3 次戳、切换全部表情、创建托盘、设置窗口开合、配置读写往返、可选 API mock），
   约 10s 内退出；成功 stdout 打印 `SELFTEST OK <json摘要>`，失败打印 `SELFTEST FAIL <原因>` 并 exit 1。**必须可在无人工操作下跑完。**

@@ -24,7 +24,7 @@ class Options:
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         prog="BlueWhalePet",
-        description="蓝鲸桌宠 - DeepSeek 蓝色大肥鱼桌面宠物",
+        description="蓝色大肥鱼 - 蓝色大肥鱼 · AI 桌宠（DeepSeek / GLM）",
         epilog=(
             "示例: py src/main.py --selftest | "
             "py src/main.py --showcase 14 --config cfg.json | "

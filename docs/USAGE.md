@@ -6,7 +6,7 @@
 | --- | --- | --- |
 | Windows 便携版 | `BlueWhalePet-Portable-1.0.0.exe` | 放到任意目录双击即可，**免安装**；配置/日志在同级 `BlueWhalePet-Data/`（目录不可写时自动回退 `%APPDATA%\BlueWhalePet`） |
 | Windows 安装版 | `BlueWhalePet-Setup-1.0.0.exe` | 双击运行安装向导，默认装到 `%LOCALAPPDATA%\Programs\BlueWhalePet`，创建开始菜单快捷方式（可选桌面快捷方式），无需管理员权限 |
-| Debian / Ubuntu | `blue-whale-pet_1.0.0_all.deb` | `sudo apt install ./blue-whale-pet_1.0.0_all.deb`（或 `sudo dpkg -i` 后 `sudo apt -f install` 补依赖）；应用菜单里会出现「蓝鲸桌宠」，或终端运行 `blue-whale-pet` |
+| Debian / Ubuntu | `blue-whale-pet_1.0.0_all.deb` | `sudo apt install ./blue-whale-pet_1.0.0_all.deb`（或 `sudo dpkg -i` 后 `sudo apt -f install` 补依赖）；应用菜单里会出现「蓝色大肥鱼」，或终端运行 `blue-whale-pet` |
 | Arch / Manjaro | `blue-whale-pet-1.0.0-1-any.pkg.tar.zst` | `sudo pacman -U blue-whale-pet-1.0.0-1-any.pkg.tar.zst`；或用 `PKGBUILD`：`makepkg -si` |
 
 > Windows SmartScreen 可能提示「未知发布者」（未做代码签名）：点击「更多信息 → 仍要运行」。
@@ -26,14 +26,18 @@
 
 宠物会自己眨眼、呼吸、发呆；长时间不理它（默认 180 秒）会睡着，戳一下就会醒。
 
-## 3. 配置 DeepSeek API Key（可选）
+## 3. 配置 API Key（可选，支持 DeepSeek / 智谱 GLM）
 
 不填 Key 也能玩（内置互动台词 + 友好提示），但**聊天功能需要 API Key**：
 
 1. 右键任务栏托盘蓝鲸图标 → **设置**；
-2. 在「API」标签页填入 API Key（在 <https://platform.deepseek.com/api_keys> 申请）；
-3. 模型默认 `deepseek-flash`（快、便宜）；可选 `deepseek-v4-pro`，也允许手填模型名；
-4. Base URL 默认 `https://api.deepseek.com`（如使用代理/中转可改，需保留 OpenAI 兼容路径）；
+2. 在「API」标签页**先选平台**：
+   | 平台 | 申请 Key | Base URL（预设） | 推荐模型 |
+   | --- | --- | --- | --- |
+   | DeepSeek | <https://platform.deepseek.com/api_keys> | `https://api.deepseek.com` | `deepseek-flash`（默认）/ `deepseek-v4-pro` / `deepseek-chat` |
+   | 智谱 GLM | <https://open.bigmodel.cn/usercenter/apikeys> | `https://open.bigmodel.cn/api/paas/v4` | `glm-4.6`（默认）/ `glm-4.5-air` / `glm-4-flash`（有免费额度） |
+3. 填入对应平台的 API Key；**两个平台的 Key 各存一份，切换平台自动带出各自的 Key、模型与 Base URL**；
+4. 模型允许手填任意该平台支持的名称；Base URL 如使用代理/中转可改（需保留 OpenAI 兼容路径）；
 5. 点「测试连接」确认可用，再「保存」。
 
 Key 只保存在本机配置文件里，不会上传到除 DeepSeek API 之外的任何地方；日志不会记录 Key。
@@ -42,7 +46,7 @@ Key 只保存在本机配置文件里，不会上传到除 DeepSeek API 之外�
 
 | 标签页 | 设置 | 说明 |
 | --- | --- | --- |
-| API | API Key / 模型 / Base URL / 超时 / max_tokens / temperature | 聊天能力配置；「测试连接」会发一次最小请求验证 |
+| API | 平台 / API Key（分平台保存）/ 模型 / Base URL / 超时 / max_tokens / temperature | 聊天能力配置；「测试连接」会发一次最小请求验证 |
 | 外观 | 大小滑杆 / 不透明度 / 置顶 | 大小 64~320 逻辑像素，立即生效并保存 |
 | 互动 | 空闲动画 / 自动睡眠秒数 / 气泡显示时长 / 滚轮缩放 / 点击互动 / 开机自启 | 自启为当前用户级（Windows 注册表 Run / Linux autostart） |
 | 人设 | 自定义人设提示词 / 回复字数上限 | 默认人设：软萌蓝鲸、言简意赅 ≤60 字 |
@@ -79,7 +83,7 @@ Windows 11 默认把新图标收进任务栏 `^` 溢出区，可在「任务栏�
 重新复制 API Key（注意不要带空格/换行），保存后点「测试连接」；确认平台账户有余额。
 
 **Q：提示 402 余额不足 / 429 限流？**
-402 需到 DeepSeek 平台充值；429 请稍后再试（桌宠会自动用本地台词兜底）。
+402 需到对应平台充值（GLM 可在 bigmodel.cn 领免费资源包）；429 请稍后再试（桌宠会自动用本地台词兜底）。
 
 **Q：公司电脑/杀毒软件报毒？**
 PyInstaller 打包的未签名 exe 偶发误报，可添加信任；也可使用安装版（onedir 结构更少触发启发式）。

@@ -901,7 +901,7 @@ class PetApp:
         autostart_var = tk.BooleanVar(value=autostart.is_enabled())
         menu.add_checkbutton(label="开机自启", variable=autostart_var, command=self.toggle_autostart)
         menu.add_separator()
-        menu.add_command(label="关于蓝鲸桌宠", command=self.show_about)
+        menu.add_command(label="关于蓝色大肥鱼", command=self.show_about)
         menu.add_command(label="退出", command=self.quit_app)
         try:
             menu.tk_popup(int(x), int(y))
@@ -1048,7 +1048,7 @@ class PetApp:
             "代码许可：MIT"
         )
         try:
-            messagebox.showinfo("关于蓝鲸桌宠", text, parent=self.pet.win if self.pet else None)
+            messagebox.showinfo("关于蓝色大肥鱼", text, parent=self.pet.win if self.pet else None)
         except Exception:  # noqa: BLE001
             self.log.debug("显示关于窗口失败", exc_info=True)
 

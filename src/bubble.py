@@ -103,7 +103,7 @@ class Bubble:
         win.withdraw()
         win.overrideredirect(True)
         try:
-            win.title("蓝鲸桌宠-气泡")
+            win.title("蓝色大肥鱼-气泡")
         except tk.TclError:
             pass
         try:

@@ -24,7 +24,9 @@ logger = logging.getLogger("bluewhale.config")
 DEFAULT_CONFIG: dict[str, Any] = {
     "version": 1,
     "api": {
+        "provider": C.DEFAULT_PROVIDER,
         "key": "",
+        "keys": {"deepseek": "", "glm": ""},
         "base_url": C.DEFAULT_BASE_URL,
         "model": C.DEFAULT_MODEL,
         "max_tokens": 120,
@@ -59,6 +61,25 @@ DEFAULT_CONFIG: dict[str, Any] = {
         "first_run": True,
     },
 }
+
+
+
+def effective_api(cfg: dict[str, Any]) -> dict[str, Any]:
+    """解析当前生效的 API 平台参数（Key 按平台取用，兼容旧 api.key 字段）。"""
+    api = (cfg.get("api") or {}) if isinstance(cfg, dict) else {}
+    provider = str(api.get("provider") or C.DEFAULT_PROVIDER).lower()
+    if provider not in C.PROVIDERS:
+        provider = C.DEFAULT_PROVIDER
+    preset = C.PROVIDERS[provider]
+    keys = api.get("keys") if isinstance(api.get("keys"), dict) else {}
+    key = str(keys.get(provider) or api.get("key") or "").strip()
+    return {
+        "provider": provider,
+        "label": preset["label"],
+        "key": key,
+        "base_url": str(api.get("base_url") or preset["base_url"]).strip().rstrip("/"),
+        "model": str(api.get("model") or preset["default_model"]).strip(),
+    }
 
 
 def default_config() -> dict[str, Any]:
@@ -154,6 +175,18 @@ def normalize_config(raw: Any) -> tuple[dict[str, Any], list[str]]:
     if "\n" in key or "\r" in key:
         key = "".join(key.split())
     api["key"] = key
+    # API 平台与分平台 Key：未知平台回退 deepseek；keys 只保留已知平台
+    provider = _as_str(api.get("provider"), C.DEFAULT_PROVIDER, 32).lower()
+    if provider not in C.PROVIDERS:
+        warnings.append(f"未知 API 平台 {provider!r}，已回退 {C.DEFAULT_PROVIDER}")
+        provider = C.DEFAULT_PROVIDER
+    api["provider"] = provider
+    raw_keys = api.get("keys") if isinstance(api.get("keys"), dict) else {}
+    keys = {pid: _as_str(raw_keys.get(pid), "", 256) for pid in C.PROVIDERS}
+    # 旧配置迁移：只有 api.key 时视为 DeepSeek 的 Key
+    if not any(keys.values()) and key:
+        keys[C.DEFAULT_PROVIDER] = key
+    api["keys"] = keys
     base_url = _as_str(api.get("base_url"), C.DEFAULT_BASE_URL, 512).rstrip("/")
     if not (base_url.startswith("http://") or base_url.startswith("https://")):
         warnings.append(f"base_url 非法，已用默认值: {base_url!r}")

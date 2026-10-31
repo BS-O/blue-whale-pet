@@ -124,6 +124,45 @@ class ConfigTest(unittest.TestCase):
         self.assertTrue(cfg["pet"]["click_through"])
         self.assertFalse(cfg["behavior"]["idle_animation"])
 
+    # ------------------------------------------------------------------
+    # API 平台（DeepSeek / GLM）
+    # ------------------------------------------------------------------
+    def test_provider_defaults(self) -> None:
+        cfg, _ = config.normalize_config({})
+        self.assertEqual(cfg["api"]["provider"], "deepseek")
+        self.assertIn("deepseek", cfg["api"]["keys"])
+        self.assertIn("glm", cfg["api"]["keys"])
+        eff = config.effective_api(cfg)
+        self.assertEqual(eff["provider"], "deepseek")
+        self.assertEqual(eff["base_url"], "https://api.deepseek.com")
+
+    def test_provider_invalid_falls_back(self) -> None:
+        cfg, warnings = config.normalize_config({"api": {"provider": "openai"}})
+        self.assertEqual(cfg["api"]["provider"], "deepseek")
+        self.assertTrue(any("平台" in w for w in warnings))
+
+    def test_glm_key_resolved_per_provider(self) -> None:
+        raw = {"api": {"provider": "glm", "keys": {"deepseek": "sk-ds", "glm": "glm-key-x"}}}
+        cfg, _ = config.normalize_config(raw)
+        eff = config.effective_api(cfg)
+        self.assertEqual(eff["provider"], "glm")
+        self.assertEqual(eff["key"], "glm-key-x")
+        # legacy key 迁移：旧配置只有 api.key → 视为 DeepSeek
+        cfg2, _ = config.normalize_config({"api": {"key": "sk-legacy"}})
+        self.assertEqual(config.effective_api(cfg2)["key"], "sk-legacy")
+        self.assertEqual(cfg2["api"]["keys"]["deepseek"], "sk-legacy")
+
+    def test_glm_payload_shape(self) -> None:
+        import api as api_module
+
+        raw = {"api": {"provider": "glm", "model": "glm-4.6", "keys": {"glm": "k"}}}
+        cfg, _ = config.normalize_config(raw)
+        payload = api_module.build_payload(cfg, [{"role": "user", "content": "hi"}], stream=True)
+        self.assertEqual(payload["model"], "glm-4.6")
+        self.assertEqual(payload["thinking"], {"type": "disabled"})
+        headers = api_module.build_headers(cfg)
+        self.assertEqual(headers["Authorization"], "Bearer k")
+
 
 if __name__ == "__main__":
     unittest.main()
