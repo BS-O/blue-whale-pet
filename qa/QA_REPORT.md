@@ -122,3 +122,14 @@ deb/Arch 为 2026-10-31 postrm 修复后重打（修复过程见 §7）。全量
   安装器静默装→40 帧内嵌、ICO 200,553B、DisplayName=蓝色大肥鱼→卸载 exit 0。
 - **运维**：C 盘满导致 Setup 复制失败，清 Temp 后补拷并恢复完整性；
   移除 mascot_preview.png（用户不需要）。
+
+---
+
+## 13. r6 轮增量 QA（2026-11-01 12:5x–13:0x，任务栏修复）
+
+- **问题**：桌宠窗口出现在任务栏（tkinter overrideredirect + withdraw/deiconify 的
+  Windows 怪癖）。
+- **修复**：platform_win.set_toolwindow()（置 WS_EX_TOOLWINDOW、清 WS_EX_APPWINDOW），
+  PetWindow 创建与 show() 后各调用一次；同时从 Alt-Tab 隐藏。
+- **验证**：79/79 测试；运行时断言 EX 样式（TOOLWINDOW=True / APPWINDOW=False）；
+  便携 selftest 40 帧全载（46.5MB）；安装器静默装→40 帧→卸载 exit 0。

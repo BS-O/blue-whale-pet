@@ -95,3 +95,11 @@
   图标 `tools/gen_icons_from_user.py`（≤256 档原图直出保持锐利，512 档放大+轻锐化）。
 - 移除 docs/screenshots/mascot_preview.png（用户不需要）。
 - "1"文件夹与 ico.png 版权归用户所有，仅本机项目使用。
+
+## 2026-11-01 下午 · 桌宠窗口不再占用任务栏（v6）
+
+- 用户反馈任务栏出现桌宠窗口。根因：tkinter overrideredirect 窗口在
+  withdraw→deiconify 循环后会被 Windows 重新赋予任务栏按钮。
+- 修复：platform_win 新增 set_toolwindow()（WS_EX_TOOLWINDOW 置位 +
+  WS_EX_APPWINDOW 清除），创建时与每次 show() 后各调用一次；
+  桌宠窗口同时从 Alt-Tab 隐藏（托盘图标仍为唯一常驻入口）。

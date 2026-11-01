@@ -64,6 +64,7 @@ class PetWindow:
         self.win = tk.Toplevel(root, class_=C.WM_CLASS)
         self.win.withdraw()
         self.win.overrideredirect(True)
+        platform_win.set_toolwindow(self.win)  # 任务栏 / Alt-Tab 不显示
         try:
             self.win.title(C.PET_WINDOW_TITLE)
         except tk.TclError:
@@ -328,6 +329,7 @@ class PetWindow:
         try:
             self.win.deiconify()
             self.win.lift()
+            platform_win.set_toolwindow(self.win)  # deiconify 后防任务栏按钮复活
             if (self.cfg.get("pet") or {}).get("always_on_top", True):
                 self.win.attributes("-topmost", True)
         except tk.TclError:

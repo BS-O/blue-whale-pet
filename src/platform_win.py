@@ -17,6 +17,8 @@ _scale_ready = False
 
 # 常量
 GWL_EXSTYLE = -20
+WS_EX_TOOLWINDOW = 0x00000080
+WS_EX_APPWINDOW = 0x00040000
 WS_EX_LAYERED = 0x00080000
 WS_EX_TRANSPARENT = 0x00000020
 LWA_COLORKEY = 0x00000001
@@ -136,6 +138,33 @@ def set_window_title(widget: Any, title: str) -> bool:
     try:
         _user32().SetWindowTextW(ctypes.c_void_p(hwnd), ctypes.c_wchar_p(title))
         return True
+    except Exception:  # noqa: BLE001
+        return False
+
+
+def set_toolwindow(widget: Any) -> bool:
+    """把窗口设为工具窗：不显示任务栏按钮、不进 Alt-Tab（桌宠窗口用）。
+
+    tkinter 的 overrideredirect 窗口在 withdraw→deiconify 后会被 Windows
+    重新加上任务栏按钮，这里直接改扩展样式一劳永逸。
+    """
+    if not IS_WINDOWS:
+        return False
+    hwnd = get_root_hwnd(widget)
+    if not hwnd:
+        return False
+    try:
+        user32 = _user32()
+        if hasattr(user32, "GetWindowLongPtrW"):
+            getter = user32.GetWindowLongPtrW
+            getter.argtypes = [ctypes.c_void_p, ctypes.c_int]
+            getter.restype = ctypes.c_longlong
+        else:
+            getter = user32.GetWindowLongW
+            getter.argtypes = [ctypes.c_void_p, ctypes.c_int]
+            getter.restype = ctypes.c_long
+        current = int(getter(ctypes.c_void_p(hwnd), GWL_EXSTYLE))
+        return _set_ex_style(hwnd, (current & ~WS_EX_APPWINDOW) | WS_EX_TOOLWINDOW)
     except Exception:  # noqa: BLE001
         return False
 

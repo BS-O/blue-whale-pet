@@ -1,0 +1,8 @@
+{
+  "tag_name": "v1.0.0",
+  "target_commitish": "main",
+  "name": "蓝色大肥鱼 v1.0.0",
+  "body": "## 🐟 蓝色大肥鱼 · AI 桌宠 v1.0.0\n\n一只住在你桌面上的**蓝色大肥鱼**：会眨眼、会卖萌、会陪你聊天。接入 **DeepSeek / 智谱 GLM** 双平台 API，同一份 Python 源码构建全平台安装包。\n\n> 本项目由 **DSH（DeepSeek Harness）AI 智能体**自主设计并全程创作生成。\n\n### 📥 下载\n\n| 文件 | 适用 |\n| --- | --- |\n| `BlueWhalePet-Portable-1.0.0.exe` | Windows 便携版（单文件免安装，双击即用） |\n| `BlueWhalePet-Setup-1.0.0.exe` | Windows 安装版（含开始菜单/卸载器） |\n| `blue-whale-pet_1.0.0_all.deb` | Debian / Ubuntu 及衍生版 |\n| `blue-whale-pet-1.0.0-1-any.pkg.tar.zst` | Arch / Manjaro |\n| `SHA256SUMS.txt` | 全部产物校验和 |\n\n### ✨ 亮点\n\n- **多素材状态系统**：状态表情直接取自用户贴纸素材（对话气泡、Zzz 云、问号均为素材自带）\n- **愤怒 50% 抽签**：愤怒时 50% 概率切换 4.jpg 方形蓝角色变体（angry_alt），另 50% 为挥鳍愤怒版\n- **用户图标**：应用/托盘/安装器图标全套来自用户提供的 ico.png（≤256 档原图直出保持锐利）\n- DeepSeek / 智谱 GLM 双平台聊天（托盘设置里切换，Key 本机保存）\n- 14+1 状态动画、拖拽缩放、开机自启、点击穿透、气泡闲聊\n- 桌宠本体右键不再弹菜单（托盘菜单保留全部功能入口）\n\n### ✅ 质量证据\n\n79/79 测试通过；40 帧全载、15 状态切换自检；安装器 1050 文件往返验证；DEB VERIFY OK。\n\n### 🔐 校验和（SHA-256）\n\n```\n4dcf436a695d60087dfb9e5e7c44f43c412ed04e236afb4fcd31f2b5c0b08e5e  BlueWhalePet-Portable-1.0.0.exe\nb4103c3669b62a0c0324800bd608f77cbc867f744371430d8d9d1ed7fe48fb5d  BlueWhalePet-Setup-1.0.0.exe\ncf57b82503a9975845685ddaf977e685477bbadb6e9ceff0e641583c65cc43cc  blue-whale-pet_1.0.0_all.deb\n97349d97276117d645b856a66fc3f57089d033366b5e4a2f574ed4f706c9ad94  blue-whale-pet-1.0.0-1-any.pkg.tar.zst\n```\n\n> 注：`assets/` 中桌宠形象为 DeepSeek 蓝鲸的非官方个人二创 + 用户自有素材抠图，仅限学习交流，请勿商用；详见仓库 `LICENSE` 与 `assets/source/NOTICE.md`。",
+  "draft": false,
+  "prerelease": false
+}

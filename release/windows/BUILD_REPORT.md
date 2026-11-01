@@ -83,3 +83,12 @@
   清理 Temp（+约 550MB）后手动补拷并恢复 Medium 完整性。
 - 产物：便携（33.2MiB）/ 安装版（43.8MiB）；静默安装 40 帧内嵌、卸载 exit 0；
   便携 selftest 40 帧全载、15 状态切换、46.4MB。
+
+---
+
+## r6 重打（2026-11-01 午后，桌宠窗口移出任务栏）
+
+- platform_win 新增 set_toolwindow()：WS_EX_TOOLWINDOW 置位 + WS_EX_APPWINDOW 清除；
+  创建与每次 show() 后调用（对抗 tkinter withdraw→deiconify 复活任务栏按钮的怪癖）。
+- 运行时断言：EX 样式读回 TOOLWINDOW=True / APPWINDOW=False。
+- 产物：便携 / 安装版；静默安装 40 帧、卸载 exit 0；便携 selftest 46.5MB。
