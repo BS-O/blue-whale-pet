@@ -82,3 +82,16 @@
 - 实现：manifest 新增 `angry_alt` 状态（第 15 个），app 戳一戳触发愤怒时 50% 抽签切换；
   生成器 `tools/gen_mascot_images.py`（40 帧输出）。
 - 交互变更（用户要求）：**桌宠本体右键不再弹出菜单**（保留托盘菜单作为功能入口）。
+
+## 2026-11-01 · 状态素材更换为用户"1"文件夹 + 图标更换为 icon/ico.png（v5，用户指定）
+
+- 用户指示：弃用此前程序合成方案与联络表预览，直接抠图桌面"1"文件夹的状态图用于项目；
+  桌面 icon 文件夹的 ico.png 作为应用图标。
+- "1"文件夹素材（自带表情的成品贴纸）：happy/love/play/sad/say/sleep/what.png + 4.jpg。
+  映射：happy→idle/blink/happy/laugh/eat；say→talk（自带对话气泡）；what→think/surprise（自带问号）；
+  sad→sad；sleep→sleep（自带 Zzz 云）；love→love；play→wave/drag/angry（挥鳍姿态+青筋）；
+  4.jpg→angry_alt（延续愤怒 50% 抽签规则）。
+- 生成器 `tools/gen_sprites_from_folder.py`（40 帧，fit-box 缩放适配横版 sleep）；
+  图标 `tools/gen_icons_from_user.py`（≤256 档原图直出保持锐利，512 档放大+轻锐化）。
+- 移除 docs/screenshots/mascot_preview.png（用户不需要）。
+- "1"文件夹与 ico.png 版权归用户所有，仅本机项目使用。

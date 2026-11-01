@@ -71,3 +71,15 @@
   idle/blink/drag，4.jpg 作为 angry_alt（愤怒 50% 抽签），2.png/3.png 作 talk/think 小照片点缀。
 - app.py：戳一戳愤怒分支 50% 切 angry_alt；桌宠本体右键不再弹菜单（托盘菜单保留）。
 - 产物：便携（29.2MB）/ 安装版（39.8MB）；静默安装 1050 文件（40 帧内嵌）、卸载 exit 0。
+
+---
+
+## r5 重打（2026-11-01，用户"1"文件夹状态素材 + icon/ico.png）
+
+- 40 帧全部来自桌面"1"文件夹抠图（happy/love/play/sad/say/sleep/what + 4.jpg），
+  生成器 tools/gen_sprites_from_folder.py；图标全套来自 icon/ico.png
+  （tools/gen_icons_from_user.py，≤256 档原图直出）。
+- 构建注记：Copy-Item 复制 Setup 至 release 时因 C 盘 100% 满（剩 43MB）失败；
+  清理 Temp（+约 550MB）后手动补拷并恢复 Medium 完整性。
+- 产物：便携（33.2MiB）/ 安装版（43.8MiB）；静默安装 40 帧内嵌、卸载 exit 0；
+  便携 selftest 40 帧全载、15 状态切换、46.4MB。

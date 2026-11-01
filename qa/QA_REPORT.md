@@ -110,3 +110,15 @@ deb/Arch 为 2026-10-31 postrm 修复后重打（修复过程见 §7）。全量
 - **右键菜单**：桌宠本体 on_context_menu 仅 mark_interaction（无菜单）；托盘菜单保留。
   注意：托盘为设置/退出唯一入口（托盘默认开启）。
 - **产物**：便携 29.2MB / 安装 39.8MB（1050 文件）；DEB VERIFY OK；RELEASE OK（SHA256SUMS 同步）。
+
+---
+
+## 12. r5 轮增量 QA（2026-11-01 09:0x–09:2x，用户素材直用）
+
+- **素材直用**：gen_sprites_from_folder.py 从"1"文件夹抠 8 图组 40 帧
+  （say 自带气泡/sleep 自带 Zzz 云/what 自带问号，未再叠加多余符号）；
+  icons 全套改由 icon/ico.png 生成（app.ico 6 档、tray.ico 3 档、hicolor 8 档、SVG）。
+- **验证**：79/79 测试；dev/便携 selftest 40 帧全载 15 状态（46.4MB）；
+  安装器静默装→40 帧内嵌、ICO 200,553B、DisplayName=蓝色大肥鱼→卸载 exit 0。
+- **运维**：C 盘满导致 Setup 复制失败，清 Temp 后补拷并恢复完整性；
+  移除 mascot_preview.png（用户不需要）。

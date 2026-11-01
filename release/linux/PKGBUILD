@@ -19,7 +19,7 @@ optdepends=('python-pystray: 可选系统托盘支持（无则使用宠物右键
 makedepends=('python')
 install="$pkgname.install"
 source=("$pkgname-$pkgver.tar.gz")
-sha256sums=('c365f2547930a670ca6309fab9a896110227e7ea378eedcf5fc126e01778d58b')
+sha256sums=('825586d7a71f936eb8357068ccbb6771faa41356ad3a8fe6410bc9b43d0971bb')
 
 package() {
   cd "$srcdir/$pkgname-$pkgver"
