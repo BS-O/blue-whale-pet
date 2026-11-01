@@ -28,13 +28,14 @@
 
 ## 📥 下载
 
+**最新版 v1.0.0：[GitHub Releases](https://github.com/BS-O/blue-whale-pet/releases/tag/v1.0.0)** —— 全平台安装包与校验和都在那里。
+
 | 平台 | 文件 | 大小 | SHA256（前 8 / 后 6 位） |
 | --- | --- | --- | --- |
-| Windows 便携版（推荐） | [`BlueWhalePet-Portable-1.0.0.exe`](release/windows/BlueWhalePet-Portable-1.0.0.exe) | 21.1 MB | `b095c6a1…1fc5c` |
-| Windows 安装版 | [`BlueWhalePet-Setup-1.0.0.exe`](release/windows/BlueWhalePet-Setup-1.0.0.exe) | 31.7 MB | `defbb87e…9c9ee` |
-| Debian / Ubuntu | [`blue-whale-pet_1.0.0_all.deb`](release/linux/blue-whale-pet_1.0.0_all.deb) | 1.8 MB | `c773985a…153a4` |
-| Arch / Manjaro | [`blue-whale-pet-1.0.0-1-any.pkg.tar.zst`](release/linux/blue-whale-pet-1.0.0-1-any.pkg.tar.zst) | 1.8 MB | `d479574f…93882` |
-| Linux 单文件版（可选） | [`BlueWhalePet-Linux-x86_64`](release/linux/BlueWhalePet-Linux-x86_64) | 20.2 MB | `ad0b8d4d…62a3b` |
+| Windows 便携版（推荐） | [`BlueWhalePet-Portable-1.0.0.exe`](release/windows/BlueWhalePet-Portable-1.0.0.exe) | 33.2 MB | `4dcf436a…b08e5e` |
+| Windows 安装版 | [`BlueWhalePet-Setup-1.0.0.exe`](release/windows/BlueWhalePet-Setup-1.0.0.exe) | 43.8 MB | `b4103c36…48fb5d` |
+| Debian / Ubuntu | [`blue-whale-pet_1.0.0_all.deb`](release/linux/blue-whale-pet_1.0.0_all.deb) | 13.4 MB | `cf57b825…cc43cc` |
+| Arch / Manjaro | [`blue-whale-pet-1.0.0-1-any.pkg.tar.zst`](release/linux/blue-whale-pet-1.0.0-1-any.pkg.tar.zst) | 13.4 MB | `97349d97…c9ad94` |
 
 完整校验值：`release/SHA256SUMS.txt`。
 
