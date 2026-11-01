@@ -1,6 +1,8 @@
 MIT License
 
-Copyright (c) 2026 蓝鲸桌宠 contributors
+Copyright (c) 2026 蓝色大肥鱼（BlueWhalePet）项目贡献者
+本项目（代码、构建脚本、文档与全部工程实现）由 DSH（DeepSeek Harness）AI 智能体
+自主设计并全程创作生成。
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -25,3 +27,7 @@ SOFTWARE.
 注意：本许可证仅覆盖本项目代码。DeepSeek 名称、蓝鲸（蓝色大肥鱼）官方 logo 及相关品牌视觉的
 版权归 DeepSeek（杭州深度求索人工智能基础技术研究有限公司）所有；本项目为非官方个人二创作品，
 美术资产基于官方 logo 参考程序化二创生成，详见 assets/source/NOTICE.md。
+
+附注（用户素材）：仓库内部分桌宠形象与图标素材抠图自用户提供之本地图片（含用户自有贴纸与
+桌面图片），该部分素材版权归用户提供者所有，仅随本项目作展示与学习用途，不适用上述 MIT
+条款、不单独授权再分发。

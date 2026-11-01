@@ -153,6 +153,7 @@ bash packaging/linux/build_linux.sh                 # Debian + Arch 包（WSL De
 
 ## ⚖️ 免责声明与许可
 
+- 🤖 **本项目由 DSH（DeepSeek Harness）AI 智能体自主设计并全程创作生成**——包括全部代码、构建脚本、测试与文档；人类仅提出需求与验收。
 - 本项目是**非官方**个人作品，与 DeepSeek 官方无关；「DeepSeek」「蓝鲸」名称与形象相关权利归其所有者。美术为参考官方 logo 的程序化二创，仅供学习交流，请勿商用。
 - 代码以 MIT 许可发布，详见 [`LICENSE`](LICENSE)；素材来源与处理记录见 [`assets/source/NOTICE.md`](assets/source/NOTICE.md)。
 - 与 DeepSeek API 的通信受其服务条款约束；本项目不收集任何遥测数据，API Key 仅保存在本机配置文件。
